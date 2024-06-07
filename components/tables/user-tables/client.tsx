@@ -7,6 +7,8 @@ import { User } from '@/constants/data';
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { columns } from './columns';
+import axios from 'axios';
+import React from 'react';
 
 interface ProductsClientProps {
   data: User[];
@@ -14,6 +16,17 @@ interface ProductsClientProps {
 
 export const UserClient: React.FC<ProductsClientProps> = ({ data }) => {
   const router = useRouter();
+
+  const fetchUsers = async () => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`);
+    console.log(res);
+  };
+
+  React.useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  // fetch users complete: fix table
 
   return (
     <>
