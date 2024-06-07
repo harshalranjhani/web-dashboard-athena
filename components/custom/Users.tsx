@@ -5,10 +5,9 @@ import axios from 'axios';
 
 const Users = () => {
   const [users, setUsers] = useState(0);
-  const backendUrl = "http://localhost:8080"
 
   const fetchUsers = async () => {
-    const response = await axios.get(`${backendUrl}/user`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`);
     setUsers(response.data.length);
   };
 
