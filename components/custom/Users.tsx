@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Users = () => {
   const [users, setUsers] = useState(0);
-  const backendUrl = "http://localhost:8080/user"
+  const backendUrl = "http://localhost:8080"
 
   const fetchUsers = async () => {
     const response = await axios.get(`${backendUrl}/user`);

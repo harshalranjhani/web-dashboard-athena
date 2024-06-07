@@ -7,10 +7,12 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { analyticsActions } from '@/utils/store/analytics-slice';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { addDays, format } from 'date-fns';
 import * as React from 'react';
 import { DateRange } from 'react-day-picker';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function CalendarDateRangePicker({
   className
@@ -19,6 +21,14 @@ export function CalendarDateRangePicker({
     from: new Date(2023, 0, 20),
     to: addDays(new Date(2023, 0, 20), 20)
   });
+  const dispatch = useDispatch();
+
+  React.useEffect(()=>{
+    if(date) {
+      dispatch(analyticsActions.setStartDate({startDate: date.from}));
+      dispatch(analyticsActions.setEndDate({endDate: date.to}));
+    }
+  },[date])
 
   return (
     <div className={cn('grid gap-2', className)}>
