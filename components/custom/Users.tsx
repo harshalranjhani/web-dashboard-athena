@@ -9,8 +9,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     const response = await axios.get(`${backendUrl}/user`);
-    const data = response.data;
-    setUsers(data.length);
+    setUsers(response.data.length);
   };
 
   useEffect(() => {
