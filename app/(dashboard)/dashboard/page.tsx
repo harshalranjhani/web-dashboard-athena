@@ -23,7 +23,7 @@ export default function page() {
       <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
         <div className="flex items-center justify-between space-y-2">
           <h2 className="text-3xl font-bold tracking-tight">
-            Hi, Welcome back 👋
+            Hi, Welcome Back 👋
           </h2>
           <div className="hidden items-center space-x-2 md:flex">
             <CalendarDateRangePicker />
@@ -40,7 +40,7 @@ export default function page() {
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Users />
-             <Blogs />
+              <Blogs />
               <Surveys />
               <ActiveUsers />
             </div>
@@ -55,9 +55,9 @@ export default function page() {
               </Card>
               <Card className="col-span-4 md:col-span-3">
                 <CardHeader>
-                  <CardTitle>Recent Sales</CardTitle>
+                  <CardTitle>Recent Questions</CardTitle>
                   <CardDescription>
-                    You made 265 sales this month.
+                    There were 265 questions this month.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

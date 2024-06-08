@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import axios from 'axios';
@@ -7,7 +7,9 @@ const Surveys = () => {
   const [surveys, setSurveys] = useState(0);
 
   const fetchSurveys = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/survey`);
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/survey`
+    );
     setSurveys(response.data.data.length);
   };
 
@@ -19,7 +21,7 @@ const Surveys = () => {
     <div>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Surveys</CardTitle>
+          <CardTitle className="text-sm font-medium">Total States</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
