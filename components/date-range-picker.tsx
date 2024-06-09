@@ -44,12 +44,15 @@ export const fetchAnalytics = async (
       })
     );
     toast({
+      duration: 1000,
       title: 'Analytics fetched!',
       description:
         'New analytics data has been updated according to the selected date range.'
     });
   } catch (e: any) {
     toast({
+      duration: 1000,
+      variant: "destructive",
       title: 'Something went wrong!',
       description: e.message
     });
