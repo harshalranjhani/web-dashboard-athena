@@ -22,6 +22,7 @@ export const fetchAnalytics = async (
   dispatch: any,
   toast: any
 ) => {
+  console.log(startDate, endDate)
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/analytics`,
@@ -68,21 +69,15 @@ export function CalendarDateRangePicker({
     to: new Date()
   });
   const dispatch = useDispatch();
-  const startDate = useSelector((state: any) => state.analytics.startDate);
-  const endDate = useSelector((state: any) => state.analytics.endDate);
   const { toast } = useToast();
 
   React.useEffect(() => {
     if (date) {
       dispatch(analyticsActions.setStartDate({ startDate: date.from }));
       dispatch(analyticsActions.setEndDate({ endDate: date.to }));
-      fetchAnalytics(startDate, endDate, dispatch, toast);
+      fetchAnalytics(date.from, date.to, dispatch, toast);
     }
   }, [date]);
-
-  React.useEffect(() => {
-    fetchAnalytics(startDate, endDate, dispatch, toast);
-  }, []);
 
   return (
     <div className={cn('grid gap-2', className)}>
