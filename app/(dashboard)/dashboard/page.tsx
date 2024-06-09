@@ -1,10 +1,11 @@
+'use client';
 import ActiveUsers from '@/components/custom/ActiveUsers';
 import Blogs from '@/components/custom/Blogs';
-import Surveys from '@/components/custom/Surveys';
+import Questions from '@/components/custom/Questions';
 import Users from '@/components/custom/Users';
 import { CalendarDateRangePicker } from '@/components/date-range-picker';
 import { Overview } from '@/components/overview';
-import { RecentSales } from '@/components/recent-sales';
+import { RecentQuestions } from '@/components/recent-questions';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -15,9 +16,13 @@ import {
 } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import axios from 'axios';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-export default function page() {
+export default function Page() {
+  const questions = useSelector((state: any) => state.analytics.questions);
+
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
@@ -41,7 +46,7 @@ export default function page() {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Users />
               <Blogs />
-              <Surveys />
+              <Questions />
               <ActiveUsers />
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
@@ -55,13 +60,13 @@ export default function page() {
               </Card>
               <Card className="col-span-4 md:col-span-3">
                 <CardHeader>
-                  <CardTitle>Recent Questions</CardTitle>
+                  <CardTitle>Questions in this time range</CardTitle>
                   <CardDescription>
-                    There were 265 questions this month.
+                    {`There were ${questions.length} questions during this timeline.`}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentSales />
+                  <RecentQuestions questions={questions} />
                 </CardContent>
               </Card>
             </div>

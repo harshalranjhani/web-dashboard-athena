@@ -9,26 +9,76 @@ import {
 import { cn } from '@/lib/utils';
 import { analyticsActions } from '@/utils/store/analytics-slice';
 import { CalendarIcon } from '@radix-ui/react-icons';
+import axios from 'axios';
 import { addDays, format } from 'date-fns';
 import * as React from 'react';
 import { DateRange } from 'react-day-picker';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast, useToast } from './ui/use-toast';
+
+export const fetchAnalytics = async (
+  startDate: any,
+  endDate: any,
+  dispatch: any,
+  toast: any
+) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/analytics`,
+      {
+        startDate,
+        endDate
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    dispatch(
+      analyticsActions.setData({
+        totalUsers: response.data.data.totalUsers,
+        totalBlogs: response.data.data.totalBlogs,
+        totalQuestions: response.data.data.questions.length,
+        questions: response.data.data.questions
+      })
+    );
+    toast({
+      title: 'Analytics fetched!',
+      description:
+        'New analytics data has been updated according to the selected date range.'
+    });
+  } catch (e: any) {
+    toast({
+      title: 'Something went wrong!',
+      description: e.message
+    });
+  }
+};
 
 export function CalendarDateRangePicker({
   className
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2023, 0, 20),
-    to: addDays(new Date(2023, 0, 20), 20)
+    from: addDays(new Date(), -2),
+    to: new Date()
   });
   const dispatch = useDispatch();
+  const startDate = useSelector((state: any) => state.analytics.startDate);
+  const endDate = useSelector((state: any) => state.analytics.endDate);
+  const { toast } = useToast();
 
-  React.useEffect(()=>{
-    if(date) {
-      dispatch(analyticsActions.setStartDate({startDate: date.from}));
-      dispatch(analyticsActions.setEndDate({endDate: date.to}));
+  React.useEffect(() => {
+    if (date) {
+      dispatch(analyticsActions.setStartDate({ startDate: date.from }));
+      dispatch(analyticsActions.setEndDate({ endDate: date.to }));
+      fetchAnalytics(startDate, endDate, dispatch, toast);
     }
-  },[date])
+  }, [date]);
+
+  React.useEffect(() => {
+    fetchAnalytics(startDate, endDate, dispatch, toast);
+  }, []);
 
   return (
     <div className={cn('grid gap-2', className)}>

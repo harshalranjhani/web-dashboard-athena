@@ -3,8 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const analyticsSlice = createSlice({
   name: 'analytics',
   initialState: {
-    startDate: null,
-    endDate: null
+    startDate: new Date(new Date().setDate(new Date().getDate() - 2)),
+    endDate: new Date(),
+    totalUsers: 0,
+    totalBlogs: 0,
+    totalQuestions: 0,
+    questions: []
   },
   reducers: {
     setStartDate(state, action) {
@@ -12,6 +16,12 @@ const analyticsSlice = createSlice({
     },
     setEndDate(state, action) {
       state.endDate = action.payload.endDate;
+    },
+    setData(state, action) {
+      state.totalUsers = action.payload.totalUsers;
+      state.totalBlogs = action.payload.totalBlogs;
+      state.totalQuestions = action.payload.totalQuestions;
+      state.questions = action.payload.questions;
     }
   }
 });

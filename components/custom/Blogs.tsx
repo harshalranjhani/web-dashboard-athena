@@ -2,18 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const Blogs = () => {
-  const [blogs, setBlogs] = useState(0);
-
-  const fetchBlogs = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/blog`);
-    setBlogs(response.data.data.length);
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
+  
+  const totalBlogs = useSelector((state: any) => state.analytics.totalBlogs);
 
   return (
     <div>
@@ -36,7 +29,7 @@ const Blogs = () => {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{blogs}</div>
+          <div className="text-2xl font-bold">{totalBlogs}</div>
           <p className="text-xs text-muted-foreground">
             +180.1% from last month
           </p>

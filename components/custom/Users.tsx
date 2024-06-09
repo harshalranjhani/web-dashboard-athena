@@ -2,18 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const Users = () => {
   const [users, setUsers] = useState(0);
-
-  const fetchUsers = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`);
-    setUsers(response.data.length);
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const startDate = useSelector((state: any) => state.analytics.startDate);
+  const endDate = useSelector((state: any) => state.analytics.endDate);
+  const totalUsers = useSelector((state: any) => state.analytics.totalUsers);
 
   return (
     <Card>
@@ -33,7 +28,7 @@ const Users = () => {
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{users}</div>
+        <div className="text-2xl font-bold">{totalUsers}</div>
         <p className="text-xs text-muted-foreground">+20.1% from last month</p>
       </CardContent>
     </Card>
