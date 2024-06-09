@@ -43,6 +43,7 @@ export const fetchAnalytics = async (
         questions: response.data.data.questions
       })
     );
+    console.log(response.data)
     toast({
       duration: 1000,
       title: 'Analytics fetched!',
