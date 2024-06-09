@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, eachDayOfInterval, startOfDay } from 'date-fns';
 import { useSelector } from 'react-redux';
 
+// Sample questions data (remove if you use redux data only)
 const questions = [
   {
     createdAt: "2024-06-09T08:56:48.192Z",
@@ -18,6 +19,7 @@ const questions = [
   // Add more questions as needed
 ];
 
+// Function to group data by date
 const groupByDate = (questions: any) => {
   const groupedData = questions.reduce((acc: any, question: any) => {
     const date = format(parseISO(question.createdAt), 'dd-MM-yyyy');
@@ -25,20 +27,35 @@ const groupByDate = (questions: any) => {
     return acc;
   }, {});
 
-  return Object.keys(groupedData).map(date => ({
+  return groupedData;
+};
+
+// Function to create a date range
+const createDateRange = (start: Date, end: Date) => {
+  return eachDayOfInterval({ start, end }).map(date => format(date, 'dd-MM-yyyy'));
+};
+
+// Function to fill missing dates with zero values
+const fillMissingDates = (groupedData: any, dateRange: any) => {
+  return dateRange.map((date: any) => ({
     name: date,
-    total: groupedData[date]
+    total: groupedData[date] || 0
   }));
 };
 
 export function Overview() {
   const [data, setData] = useState([]);
   const reduxQuestions = useSelector((state: any) => state.analytics.questions);
-  const reduxGroupedData = groupByDate(reduxQuestions)
+  const startDate = useSelector((state: any) => state.analytics.startDate);
+  const endDate = useSelector((state: any) => state.analytics.endDate);
 
   useEffect(() => {
-    const groupedData = groupByDate(reduxQuestions || questions);
-    setData(groupedData);
+    const questionsData = reduxQuestions.length ? reduxQuestions : questions;
+    const groupedData = groupByDate(questionsData);
+    const dates = Object.keys(groupedData).map(date => parseISO(date));
+    const dateRange = createDateRange(startDate, endDate);
+    const filledData = fillMissingDates(groupedData, dateRange);
+    setData(filledData);
   }, [reduxQuestions]);
 
   return (
