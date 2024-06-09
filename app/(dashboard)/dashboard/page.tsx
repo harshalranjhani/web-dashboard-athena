@@ -56,9 +56,9 @@ export default async function Page() {
               </Card>
               <Card className="col-span-4 md:col-span-3">
                 <CardHeader>
-                  <CardTitle>Questions in this time range</CardTitle>
+                  <CardTitle>Queries in this time range</CardTitle>
                   <CardDescription>
-                    {`Total questions asked in this time range`}
+                    {`Total queries asked in this time range`}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
