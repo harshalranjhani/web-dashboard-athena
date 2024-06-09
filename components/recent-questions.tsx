@@ -1,6 +1,9 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useSelector } from 'react-redux';
 
-export function RecentQuestions({ questions }: { questions: any[] }) {
+export function RecentQuestions() {
+  const questions = useSelector((state: any) => state.analytics.questions);
   return (
     <div className="h-[280px] overflow-auto">
       {questions.map((question: any, index: number) => {

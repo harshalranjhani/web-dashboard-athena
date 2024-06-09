@@ -1,4 +1,5 @@
-'use client';
+'use server';
+import { auth } from '@/auth';
 import ActiveUsers from '@/components/custom/ActiveUsers';
 import Blogs from '@/components/custom/Blogs';
 import Questions from '@/components/custom/Questions';
@@ -16,13 +17,8 @@ import {
 } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import axios from 'axios';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
-export default function Page() {
-  const questions = useSelector((state: any) => state.analytics.questions);
-
+export default async function Page() {
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
@@ -62,11 +58,11 @@ export default function Page() {
                 <CardHeader>
                   <CardTitle>Questions in this time range</CardTitle>
                   <CardDescription>
-                    {`There were ${questions.length} questions during this timeline.`}
+                    {`Total questions asked in this time range`}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentQuestions questions={questions} />
+                  <RecentQuestions />
                 </CardContent>
               </Card>
             </div>
