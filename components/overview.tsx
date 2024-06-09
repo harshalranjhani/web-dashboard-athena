@@ -35,9 +35,9 @@ export function Overview() {
   const [data, setData] = useState([]);
   const reduxQuestions = useSelector((state: any) => state.analytics.questions);
   const reduxGroupedData = groupByDate(reduxQuestions)
-  
+
   useEffect(() => {
-    const groupedData = groupByDate(reduxQuestions);
+    const groupedData = groupByDate(reduxQuestions || questions);
     setData(groupedData);
   }, [reduxQuestions]);
 
