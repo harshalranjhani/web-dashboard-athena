@@ -22,7 +22,6 @@ export const fetchAnalytics = async (
   dispatch: any,
   toast: any
 ) => {
-  console.log(startDate, endDate)
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/analytics`,
@@ -44,7 +43,6 @@ export const fetchAnalytics = async (
         questions: response.data.data.questions
       })
     );
-    console.log(response.data)
     toast({
       duration: 1000,
       title: 'Analytics fetched!',
