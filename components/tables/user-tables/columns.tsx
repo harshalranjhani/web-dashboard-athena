@@ -40,8 +40,8 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: 'gender',
     header: 'GENDER'
   },
-  {
-    id: 'actions',
-    cell: ({ row }) => <CellAction data={row.original} />
-  }
+  // {
+  //   id: 'actions',
+  //   cell: ({ row }) => <CellAction data={row.original} />
+  // }
 ];
