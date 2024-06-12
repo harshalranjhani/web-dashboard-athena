@@ -48,7 +48,7 @@ export default async function Page() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
                 <CardHeader>
-                  <CardTitle>Overview</CardTitle>
+                  <CardTitle>Overview (Number of queries vs date)</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
                   <Overview />
