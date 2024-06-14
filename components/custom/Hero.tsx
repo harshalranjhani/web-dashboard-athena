@@ -24,7 +24,9 @@ export const Hero = () => (
           <Button size="lg" className="gap-4" variant="outline">
             Jump on a call <PhoneCall className="w-4 h-4" />
           </Button>
-          <Button size="lg" className="gap-4">
+          <Button size="lg" className="gap-4" onClick={()=>{
+            window.location.href = "/signin"
+          }}>
             Sign up here <MoveRight className="w-4 h-4" />
           </Button>
         </div>
