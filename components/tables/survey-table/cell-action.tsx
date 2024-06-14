@@ -17,11 +17,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-interface CellActionProps {
-  data: User;
-}
 
-export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+export const CellAction: React.FC<any> = ({ data }) => {
   const [alertModalLoading, setAlertModalLoading] = useState(false);
   const [viewModalLoading, setViewModalLoading] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
