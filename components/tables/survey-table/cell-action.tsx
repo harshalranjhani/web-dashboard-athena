@@ -9,31 +9,81 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { useToast } from '@/components/ui/use-toast';
 import { User } from '@/constants/data';
+import { analyticsActions } from '@/utils/store/analytics-slice';
 import { Edit, MoreHorizontal, Trash, Eye } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface CellActionProps {
   data: User;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const [loading, setLoading] = useState(false);
+  const [alertModalLoading, setAlertModalLoading] = useState(false);
   const [viewModalLoading, setViewModalLoading] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [alertModalOpen, setAlertModalOpen] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
+  const surveys = useSelector((state: any) => state.analytics.surveys);
+  const dispatch = useDispatch();
 
-  const onConfirm = async () => {};
+  const onConfirm = async () => {
+    // delete the survey
+    try {
+      setAlertModalLoading(true);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/survey/${data.id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      const respData = await response.json();
+      if (respData.status === 200) {
+        toast({
+          duration: 2000,
+          title: 'Survey deleted successfully'
+        });
+        // delete the survey from the surveys array
+        const newSurveys = surveys.filter(
+          (survey: any) => survey.id !== data.id
+        );
+        dispatch(analyticsActions.setSurveys({ surveys: newSurveys }));
+      } else {
+        toast({
+          duration: 2000,
+          title: 'An error occurred.',
+          description: 'Failed to delete survey',
+          variant: 'destructive'
+        });
+      }
+      setAlertModalLoading(false);
+      setAlertModalOpen(false);
+    } catch (e) {
+      setAlertModalLoading(false);
+      setAlertModalOpen(false);
+      toast({
+        duration: 2000,
+        title: 'An error occurred.',
+        description: 'Failed to delete survey',
+        variant: 'destructive'
+      });
+    }
+  };
 
   return (
     <>
       <AlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={alertModalOpen}
+        onClose={() => setAlertModalOpen(false)}
         onConfirm={onConfirm}
-        loading={loading}
+        loading={alertModalLoading}
       />
       <ViewModal
         isOpen={viewModalOpen}
@@ -50,9 +100,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => setViewModalOpen(true)}
-          >
+          <DropdownMenuItem onClick={() => setViewModalOpen(true)}>
             <Eye className="mr-2 h-4 w-4" /> View
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -60,9 +108,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={() => setOpen(true)}>
+          <DropdownMenuItem onClick={() => {
+            console.log("data.id", data.id)
+            setAlertModalOpen(true);
+          }}>
             <Trash className="mr-2 h-4 w-4" /> Delete
-          </DropdownMenuItem> */}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

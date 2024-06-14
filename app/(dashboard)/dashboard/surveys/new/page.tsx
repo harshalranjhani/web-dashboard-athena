@@ -7,6 +7,8 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { X } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { analyticsActions } from '@/utils/store/analytics-slice';
 
 interface Question {
   text: string;
@@ -21,6 +23,8 @@ export default function SurveyCreatePage() {
   ]);
   const { toast } = useToast();
   const router = useRouter();
+  const surveys = useSelector((state: any) => state.analytics.surveys);
+  const dispatch = useDispatch();
 
   const breadcrumbItems = [
     { title: 'Surveys', link: '/dashboard/surveys' },
@@ -65,11 +69,15 @@ export default function SurveyCreatePage() {
           duration: 2000,
           title: 'Survey created successfully!'
         });
+        // add the survey to the surveys array
+        const newSurveys = [...surveys, data.data];
+        dispatch(analyticsActions.setSurveys({ surveys: newSurveys }));
         router.replace('/dashboard/surveys');
       } else {
         toast({
           duration: 2000,
           title: 'An error occurred',
+          variant: "destructive",
           description: 'Failed to create survey'
         });
       }
@@ -77,6 +85,7 @@ export default function SurveyCreatePage() {
       toast({
         duration: 2000,
         title: 'An error occurred',
+        variant: "destructive",
         description: 'Failed to create survey'
       });
     }
