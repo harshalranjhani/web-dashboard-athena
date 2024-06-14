@@ -1,3 +1,4 @@
+"use client";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
