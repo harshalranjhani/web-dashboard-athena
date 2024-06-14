@@ -2,7 +2,7 @@ import BreadCrumb from '@/components/breadcrumb';
 import { SurveyClient } from '@/components/tables/survey-table/client';
 import { users } from '@/constants/data';
 
-const breadcrumbItems = [{ title: 'User', link: '/dashboard/user' }];
+const breadcrumbItems = [{ title: 'Surveys', link: '/dashboard/surveys' }];
 export default function page() {
   return (
     <>
