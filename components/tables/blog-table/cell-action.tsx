@@ -1,6 +1,6 @@
 'use client';
 import { AlertModal } from '@/components/modal/alert-modal';
-import { ViewModal } from '@/components/modal/view-survey-modal';
+import { BlogViewModal } from '@/components/modal/view-blog-modal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -18,7 +18,15 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface CellActionProps {
-  data: User;
+  data: User & {
+    authorName: string;
+    content: string;
+    createdAt: string;
+    picture: string;
+    region: string;
+    title: string;
+    updatedAt: string;
+  };
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -28,15 +36,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [alertModalOpen, setAlertModalOpen] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const surveys = useSelector((state: any) => state.analytics.surveys);
+  const blogs = useSelector((state: any) => state.analytics.blogs);
   const dispatch = useDispatch();
 
   const onConfirm = async () => {
-    // delete the survey
+    // delete the blog
     try {
       setAlertModalLoading(true);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/survey/${data.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/blog/${data.id}`,
         {
           method: 'DELETE',
           headers: {
@@ -48,18 +56,18 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       if (respData.status === 200) {
         toast({
           duration: 2000,
-          title: 'Survey deleted successfully'
+          title: 'Blog deleted successfully'
         });
-        // delete the survey from the surveys array
-        const newSurveys = surveys.filter(
-          (survey: any) => survey.id !== data.id
+        // delete the Blog from the Blogs array
+        const newBlogs = blogs.filter(
+          (blog: any) => blog.id !== data.id
         );
-        dispatch(analyticsActions.setSurveys({ surveys: newSurveys }));
+        dispatch(analyticsActions.setBlogs({ blogs: newBlogs }));
       } else {
         toast({
           duration: 2000,
           title: 'An error occurred.',
-          description: 'Failed to delete survey',
+          description: 'Failed to delete blog',
           variant: 'destructive'
         });
       }
@@ -71,7 +79,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       toast({
         duration: 2000,
         title: 'An error occurred.',
-        description: 'Failed to delete survey',
+        description: 'Failed to delete blog',
         variant: 'destructive'
       });
     }
@@ -85,7 +93,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={alertModalLoading}
       />
-      <ViewModal
+      <BlogViewModal
         isOpen={viewModalOpen}
         onClose={() => setViewModalOpen(false)}
         loading={viewModalLoading}
@@ -109,6 +117,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => {
+            console.log("data.id", data.id)
             setAlertModalOpen(true);
           }}>
             <Trash className="mr-2 h-4 w-4" /> Delete

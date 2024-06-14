@@ -55,13 +55,13 @@ export function DataTable<TData, TValue>({
           }
           className="w-full md:max-w-sm"
         />
-        {searchKey === "topic" && <Button
+        {searchKey !== "name" && <Button
           className="text-xs md:text-sm"
           onClick={() => {
-            router.push('/dashboard/surveys/new');
+            router.push(`/dashboard/${searchKey === "title" ? "blogs" : "surveys"}/new`);
           }}
         >
-          Create Survey
+        {searchKey === "title" ? "Create Blog" : "Create Survey"}
         </Button>}
       </div>
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
