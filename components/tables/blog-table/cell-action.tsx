@@ -117,7 +117,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => {
-            console.log("data.id", data.id)
             setAlertModalOpen(true);
           }}>
             <Trash className="mr-2 h-4 w-4" /> Delete
