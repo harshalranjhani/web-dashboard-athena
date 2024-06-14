@@ -11,8 +11,8 @@ import { ReduxProvider } from '@/utils/redux-provider/provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Athena | Yug Foundation',
+  description: "Yug Foundation's Athena",
 };
 
 export default async function RootLayout({

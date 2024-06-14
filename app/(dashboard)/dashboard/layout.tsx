@@ -3,8 +3,8 @@ import Sidebar from '@/components/layout/sidebar';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn Dashboard Starter',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Dashboard | Athena',
+  description: "Admin dashboard for Yug Foundation's Athena"
 };
 
 export default function DashboardLayout({
