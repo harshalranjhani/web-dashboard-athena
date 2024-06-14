@@ -112,6 +112,18 @@ export const navItems: NavItem[] = [
     icon: 'kanban',
     label: 'kanban'
   },
+  {
+    title: 'Blogs',
+    href: '/dashboard/blogs',
+    icon: 'post',
+    label: 'blogs'
+  },
+  {
+    title: "Surveys",
+    href: "/dashboard/surveys",
+    icon: "media",
+    label: "surveys"
+  }
   // {
   //   title: 'Login',
   //   href: '/',

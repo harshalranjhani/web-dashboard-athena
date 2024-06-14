@@ -19,6 +19,7 @@ import {
 import { Input } from './input';
 import { Button } from './button';
 import { ScrollArea, ScrollBar } from './scroll-area';
+import {useRouter } from 'next/navigation';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,19 +39,31 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel()
   });
 
+  const router = useRouter();
+
   /* this can be used to get the selectedrows 
   console.log("value", table.getFilteredSelectedRowModel()); */
 
   return (
     <>
-      <Input
-        placeholder={`Search ${searchKey}...`}
-        value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
-        onChange={(event) =>
-          table.getColumn(searchKey)?.setFilterValue(event.target.value)
-        }
-        className="w-full md:max-w-sm"
-      />
+      <div className="mb-4 flex items-center justify-between">
+        <Input
+          placeholder={`Search ${searchKey}...`}
+          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn(searchKey)?.setFilterValue(event.target.value)
+          }
+          className="w-full md:max-w-sm"
+        />
+        {searchKey === "topic" && <Button
+          className="text-xs md:text-sm"
+          onClick={() => {
+            router.push('/dashboard/surveys/new');
+          }}
+        >
+          Create Survey
+        </Button>}
+      </div>
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
         <Table className="relative">
           <TableHeader>
