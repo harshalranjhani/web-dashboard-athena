@@ -35,7 +35,7 @@ export default function LoginForm() {
       toast({
         duration: 2000,
         title: 'Trouble signing in',
-        description: result.error,
+        description: "We couldn't sign you in. Please check your credentials.",
         variant: 'destructive'
       });
     } else {
