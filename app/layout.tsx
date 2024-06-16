@@ -27,7 +27,6 @@ export default async function RootLayout({
         <NextTopLoader />
         <Providers session={session}>
           <ReduxProvider>
-
           <Toaster />
           {children}
           </ReduxProvider>
