@@ -15,11 +15,13 @@ import { Label } from '@/components/ui/label';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleSignIn = async () => {
     const result = await signIn('credentials', {
@@ -41,8 +43,9 @@ export default function LoginForm() {
       toast({
         duration: 2000,
         title: 'Signed in',
-        description: 'You have been signed in successfully',
+        description: 'You have been signed in successfully'
       });
+      router.replace('/dashboard');
     }
   };
 
