@@ -12,9 +12,7 @@ import { analyticsActions } from '@/utils/store/analytics-slice';
 export default function BlogUpdatePage() {
   const { blogId } = useParams();
   const blogs = useSelector((state: any) => state.analytics.blogs);
-  console.log(blogs);
   const blog = blogs.find((b: any) => b.id === parseInt(blogId as string));
-  console.log(blog);
   const [title, setTitle] = useState(blog?.title || '');
   const [region, setRegion] = useState(blog?.region || '');
   const [pic, setPic] = useState(blog?.picture || '');
