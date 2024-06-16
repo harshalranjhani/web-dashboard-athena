@@ -20,6 +20,7 @@ export const BlogClient: React.FC<any> = ({ }) => {
   const fetchBlogs = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/blog`);
     dispatch(analyticsActions.setBlogs({blogs: res.data.data}))
+    console.log(res.data.data);
   };
 
   React.useEffect(() => {
