@@ -28,7 +28,7 @@ export default function UserAuthForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const [loading, setLoading] = useState(false);
-  const {toast} = useToast();
+  const { toast } = useToast();
   const defaultValues = {
     email: 'demo@gmail.com'
   };
@@ -38,7 +38,7 @@ export default function UserAuthForm() {
   });
 
   const onSubmit = async (data: UserFormValue) => {
-    try { 
+    try {
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -47,11 +47,11 @@ export default function UserAuthForm() {
         body: JSON.stringify(data)
       });
       const result = await response.json();
-      if(result.success) {
+      if (result.success) {
         toast({
           duration: 2000,
           title: 'User registered',
-          description: result.message,
+          description: result.message
         });
       } else {
         toast({
@@ -61,7 +61,6 @@ export default function UserAuthForm() {
           variant: 'destructive'
         });
       }
-
     } catch (error: any) {
       toast({
         duration: 2000,
@@ -99,7 +98,7 @@ export default function UserAuthForm() {
           />
 
           <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Continue With Email
+            {loading ? 'Processing...' : 'Continue With Email'}
           </Button>
         </form>
       </Form>
