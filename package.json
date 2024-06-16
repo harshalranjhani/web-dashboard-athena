@@ -67,7 +67,8 @@
     "typescript": "latest",
     "uploadthing": "latest",
     "uuid": "latest",
-    "zod": "latest"
+    "zod": "latest",
+    "zustand": "latest"
   },
   "devDependencies": {
     "@types/bcryptjs": "latest",
