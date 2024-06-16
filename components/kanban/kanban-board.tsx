@@ -2,8 +2,8 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Task, useTaskStore } from '@/lib/store';
-import { hasDraggableData } from '@/lib/utils';
+import { Task, useTaskStore } from '@/app/lib/store';
+import { hasDraggableData } from '@/app/lib/utils';
 import {
   Announcements,
   DndContext,

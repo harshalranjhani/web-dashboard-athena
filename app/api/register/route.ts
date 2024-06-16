@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { User } from '@/models/user';
-import { connectToDatabase } from '@/lib/mongodb';
 import nodemailer from 'nodemailer';
+import {User } from "@/app/models/user";
+import {connectToDatabase} from "@/app/lib/mongodb";
 
 const sendEmail = async (email: string, password: string) => {
   try {

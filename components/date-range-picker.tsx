@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import { analyticsActions } from '@/utils/store/analytics-slice';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import axios from 'axios';
