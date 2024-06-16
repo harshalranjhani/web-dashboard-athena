@@ -1,5 +1,4 @@
 'use server';
-import { auth } from '@/auth';
 import ActiveUsers from '@/components/custom/ActiveUsers';
 import Blogs from '@/components/custom/Blogs';
 import Questions from '@/components/custom/Questions';
