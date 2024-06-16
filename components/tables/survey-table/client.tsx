@@ -20,6 +20,7 @@ export const SurveyClient: React.FC<any> = ({ }) => {
   const fetchSurveys = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/survey`);
     dispatch(analyticsActions.setSurveys({surveys: res.data.data}))
+    console.log(res.data.data);
   };
 
   React.useEffect(() => {
