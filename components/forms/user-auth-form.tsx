@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import GithubSignInButton from '../github-auth-button';
+import { useToast } from '../ui/use-toast';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Enter a valid email address' })
@@ -27,6 +28,7 @@ export default function UserAuthForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const [loading, setLoading] = useState(false);
+  const {toast} = useToast();
   const defaultValues = {
     email: 'demo@gmail.com'
   };
@@ -36,10 +38,38 @@ export default function UserAuthForm() {
   });
 
   const onSubmit = async (data: UserFormValue) => {
-    signIn('credentials', {
-      email: data.email,
-      callbackUrl: callbackUrl ?? '/dashboard'
-    });
+    try { 
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      if(result.success) {
+        toast({
+          duration: 2000,
+          title: 'User registered',
+          description: result.message,
+        });
+      } else {
+        toast({
+          duration: 2000,
+          title: 'Trouble registering user',
+          description: result.error,
+          variant: 'destructive'
+        });
+      }
+
+    } catch (error: any) {
+      toast({
+        duration: 2000,
+        title: 'Trouble registering user',
+        description: error.message,
+        variant: 'destructive'
+      });
+    }
   };
 
   return (

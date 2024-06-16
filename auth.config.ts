@@ -2,6 +2,7 @@ import { NextAuthConfig } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 // MongoDB User schema
 const userSchema = new mongoose.Schema({
@@ -12,10 +13,10 @@ const userSchema = new mongoose.Schema({
   image: String
 });
 
-const User = mongoose?.models?.User || mongoose.model('User', userSchema);
+export const User = mongoose?.models?.User || mongoose.model('User', userSchema);
 
 // Connect to MongoDB
-const connectToDatabase = async () => {
+export const connectToDatabase = async () => {
   if (mongoose.connection.readyState >= 1) {
     return;
   }
@@ -30,26 +31,24 @@ const authConfig = {
       async profile(profile) {
         await connectToDatabase();
 
-        const users = await User.find({});
-
-        let user = await User.findOne({ email: profile.email });
+        const user = await User.findOne({ email: profile.email });
         if (!user) {
+          const users = await User.find({});
           if (users.length >= 20) {
-            throw new Error(
-              'You cannot signup at this time. Please try again later.'
-            );
+            throw new Error('You cannot signup at this time. Please try again later.');
           }
-          user = new User({
+          const newUser = new User({
             image: profile.avatar_url,
             name: profile.name,
             email: profile.email,
             password: '',
             authType: 'github'
           });
-          await user.save();
+          await newUser.save();
         }
 
         return {
+          id: user._id.toString(),
           name: user.name,
           email: user.email,
           image: user.image
@@ -58,33 +57,41 @@ const authConfig = {
     }),
     CredentialProvider({
       credentials: {
-        email: {
-          type: 'email'
-        },
-        password: {
-          type: 'password'
-        }
+        email: {},
+        password: {}
       },
       async authorize(credentials, req) {
-        const user = {
-          id: '1',
-          name: 'John',
-          email: credentials?.email as string
-        };
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+        try {
+          await connectToDatabase();
+          const user = await User.findOne({
+            email: credentials.email as string,
+            authType: 'credentials'
+          });
 
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          if (user) {
+            const isValid = bcrypt.compareSync(credentials.password as string, user.password);
+            if (isValid) {
+              return {
+                id: user._id.toString(),
+                name: user.name,
+                email: user.email,
+                image: user.image
+              };
+            } else {
+              throw new Error('Check your email and password and try again.');
+            }
+          } else {
+            throw new Error('No user found with the provided credentials.');
+          }
+        } catch (error: any) {
+          console.error('Authorization error: ', error);
+          throw new Error(error.message || 'Authentication failed. Please try again.');
         }
       }
     })
   ],
   pages: {
-    signIn: '/' // Sign-in page
+    signIn: '/'
   }
 } satisfies NextAuthConfig;
 
