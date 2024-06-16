@@ -1,11 +1,12 @@
+/*
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 0 0% 99%;
+    --foreground: 20 17% 28.6%;
 
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -70,6 +71,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply box-border bg-background text-foreground;
   }
@@ -77,11 +79,144 @@
 
 @layer utilities {
   .min-h-screen {
-    min-height: 100vh; /* Fallback */
+    min-height: 100vh;
+
     min-height: 100dvh;
   }
+
   .h-screen {
-    height: 100vh; /* Fallback */
+    height: 100vh;
+    height: 100dvh;
+  }
+}
+  */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 25% 96%;
+    /* eee2dc */
+    --foreground: 20 17% 28.6%;
+    /* 73504b */
+
+    --card: 30 25% 96%;
+    /* eee2dc */
+    --card-foreground: 20 17% 28.6%;
+    /* 73504b */
+
+    --popover: 30 25% 96%;
+    /* eee2dc */
+    --popover-foreground: 20 17% 28.6%;
+    /* 73504b */
+
+    --primary: 4 81.5% 45.7%;
+    /* d31f16 */
+    --primary-foreground: 0 0% 99%;
+    /* fdfdfd */
+
+    --secondary: 30 85.2% 52.4%;
+    /* eb781a */
+    --secondary-foreground: 4 81.5% 45.7%;
+    /* d31f16 */
+
+    --muted: 30 85.2% 52.4%;
+    /* eb781a */
+    --muted-foreground: 45 88.9% 57.3%;
+    /* 73504b */
+    /********************************************************/
+    --accent: 46 87.8% 58.8%;
+    /* f3be33 */
+    --accent-foreground: 4 81.5% 45.7%;
+    /* d31f16 */
+
+    --destructive: 4 81.5% 45.7%;
+    /* d31f16 */
+    --destructive-foreground: 0 0% 99%;
+    /* fdfdfd */
+
+    --border: 30 85.2% 90%;
+    /* similar to secondary for consistency */
+    --input: 30 85.2% 90%;
+    /* similar to secondary for consistency */
+    --ring: 20 17% 28.6%;
+    /* 73504b */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 30 20% 90%;
+    /* lighten the dark theme background to a very light brown */
+    --foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --card: 30 20% 90%;
+    /* lighten the dark theme card background */
+    --card-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --popover: 30 20% 90%;
+    /* lighten the dark theme popover background */
+    --popover-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --primary: 0 0% 99%;
+    /* fdfdfd */
+    --primary-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --secondary: 30 85.2% 20%;
+    /* darken the secondary color for dark theme */
+    --secondary-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --muted: 30 85.2% 20%;
+    /* darken the muted color for dark theme */
+    --muted-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --accent: 46 87.8% 40%;
+    /* darken the accent color for dark theme */
+    --accent-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --destructive: 4 81.5% 35%;
+    /* darken the destructive color for dark theme */
+    --destructive-foreground: 0 0% 0%;
+    /* black color for text in dark mode */
+
+    --border: 30 85.2% 20%;
+    /* darken the border color for dark theme */
+    --input: 30 85.2% 20%;
+    /* darken the input color for dark theme */
+    --ring: 46 87.8% 40%;
+    /* match accent darkened color */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply box-border bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .min-h-screen {
+    min-height: 100vh;
+    /* Fallback */
+    min-height: 100dvh;
+  }
+
+  .h-screen {
+    height: 100vh;
+    /* Fallback */
     height: 100dvh;
   }
 }
