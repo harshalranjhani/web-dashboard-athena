@@ -35,9 +35,8 @@ const sendEmail = async (email: string, password: string) => {
 };
 
 export async function POST(req: any) {
+  const { email } = await req.json();
   try {
-    const { email } = await req.json();
-
     if (!email) {
       return NextResponse.json(
         { error: 'Email is required', success: false },
@@ -76,6 +75,8 @@ export async function POST(req: any) {
       { status: 200 }
     );
   } catch (e: any) {
+    // delete user if email sending fails
+    await User.deleteOne({ email });
     return NextResponse.json(
       { error: e.message, success: false },
       { status: 500 }

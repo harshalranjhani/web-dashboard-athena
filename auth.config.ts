@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
   image: String
 });
 
-export const User = mongoose?.models?.User || mongoose.model('User', userSchema);
+export const User =
+  mongoose?.models?.User || mongoose.model('User', userSchema);
 
 // Connect to MongoDB
 export const connectToDatabase = async () => {
@@ -34,8 +35,16 @@ const authConfig = {
         const user = await User.findOne({ email: profile.email });
         if (!user) {
           const users = await User.find({});
+          // const existingUser = await User.findOne({ email: profile.email, authType: 'credentials'});
+
+          // if(existingUser) {
+          //   throw new Error('User already exists with the same email. Please try logging in.');
+          // }
+
           if (users.length >= 20) {
-            throw new Error('You cannot signup at this time. Please try again later.');
+            throw new Error(
+              'You cannot signup at this time. Please try again later.'
+            );
           }
           const newUser = new User({
             image: profile.avatar_url,
@@ -48,10 +57,10 @@ const authConfig = {
         }
 
         return {
-          id: user._id.toString(),
-          name: user.name,
-          email: user.email,
-          image: user.image
+          id: user?._id.toString(),
+          name: user?.name,
+          email: user?.email,
+          image: user?.image
         };
       }
     }),
@@ -69,7 +78,10 @@ const authConfig = {
           });
 
           if (user) {
-            const isValid = bcrypt.compareSync(credentials.password as string, user.password);
+            const isValid = bcrypt.compareSync(
+              credentials.password as string,
+              user.password
+            );
             if (isValid) {
               return {
                 id: user._id.toString(),
@@ -85,7 +97,9 @@ const authConfig = {
           }
         } catch (error: any) {
           console.error('Authorization error: ', error);
-          throw new Error(error.message || 'Authentication failed. Please try again.');
+          throw new Error(
+            error.message || 'Authentication failed. Please try again.'
+          );
         }
       }
     })
