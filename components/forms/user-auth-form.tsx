@@ -30,14 +30,15 @@ export default function UserAuthForm() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const defaultValues = {
-    email: 'demo@gmail.com'
+    email: 'name@domain.com'
   };
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (data: UserFormValue) => {
+    setLoading(true);
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -61,6 +62,7 @@ export default function UserAuthForm() {
           variant: 'destructive'
         });
       }
+      setLoading(false);
     } catch (error: any) {
       toast({
         duration: 2000,
@@ -68,6 +70,7 @@ export default function UserAuthForm() {
         description: error.message,
         variant: 'destructive'
       });
+      setLoading(false);
     }
   };
 
