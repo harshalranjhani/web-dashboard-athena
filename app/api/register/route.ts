@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { User } from '@/auth.config';
-import { connectToDatabase } from '@/auth.config';
+import { User } from '@/models/user';
+import { connectToDatabase } from '@/lib/mongodb';
 import nodemailer from 'nodemailer';
 
 const sendEmail = async (email: string, password: string) => {
@@ -45,7 +45,6 @@ export async function POST(req: any) {
     }
 
     await connectToDatabase();
-
     const user = await User.findOne({ email, authType: 'credentials' });
     if (user) {
       return NextResponse.json(

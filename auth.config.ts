@@ -1,28 +1,9 @@
 import { NextAuthConfig } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
-import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-
-// MongoDB User schema
-const userSchema = new mongoose.Schema({
-  authType: String,
-  name: String,
-  email: String,
-  password: String,
-  image: String
-});
-
-export const User =
-  mongoose?.models?.User || mongoose.model('User', userSchema);
-
-// Connect to MongoDB
-export const connectToDatabase = async () => {
-  if (mongoose.connection.readyState >= 1) {
-    return;
-  }
-  await mongoose.connect(process.env.MONGODB_URI as string, {});
-};
+import { User } from './models/user';
+import { connectToDatabase } from './lib/mongodb';
 
 const authConfig = {
   providers: [
