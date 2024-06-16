@@ -1,17 +1,21 @@
-// Protecting routes with next-auth
-// https://next-auth.js.org/configuration/nextjs#middleware
-// https://nextjs.org/docs/app/building-your-application/routing/middleware
+import { withAuth } from "next-auth/middleware"
 
-import NextAuth from 'next-auth';
-import authConfig from './auth.config';
+export default withAuth(
+  // `withAuth` augments your `Request` with the user's token.
+  function middleware(req) {
+    console.log(req.nextauth.token)
+  },
+  {
+    callbacks: {
+      // authorize if user is signed in
+      authorized: async ({ token }) => {
+        if (token) {
+          return true
+        }
+        return false
+      }
+    },
+  },
+)
 
-const { auth } = NextAuth(authConfig);
-
-export default auth((req) => {
-  if (!req.auth) {
-    const url = req.url.replace(req.nextUrl.pathname, '/signin');
-    return Response.redirect(url);
-  }
-});
-
-export const config = { matcher: ['/dashboard/:path*'] };
+export const config = { matcher: ["/dashboard/:path*"] }
