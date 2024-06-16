@@ -2,8 +2,8 @@ import { NextAuthConfig } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import bcrypt from 'bcryptjs';
-import { User } from './app/models/user';
-import { connectToDatabase } from './app/lib/mongodb';
+import { User } from './models/user';
+import { connectToDatabase } from './lib/mongodb';
 
 const authConfig = {
   providers: [

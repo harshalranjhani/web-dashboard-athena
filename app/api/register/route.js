@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
-import {User } from "@/app/models/user";
-import {connectToDatabase} from "@/app/lib/mongodb";
+import { User } from '@/models/user';
+import { connectToDatabase } from '@/lib/mongodb';
 
-const sendEmail = async (email: string, password: string) => {
+const sendEmail = async (email, password) => {
   try {
     let mailTransporter = nodemailer.createTransport({
       service: 'iCloud',
@@ -29,12 +29,12 @@ const sendEmail = async (email: string, password: string) => {
 
     const info = await mailTransporter.sendMail(mailDetails);
     console.log('Email sent: ' + info.response);
-  } catch (e: any) {
+  } catch (e) {
     throw new Error(e.message);
   }
 };
 
-export async function POST(req: any) {
+export async function POST(req) {
   const { email } = await req.json();
   try {
     if (!email) {
@@ -73,8 +73,9 @@ export async function POST(req: any) {
       { message: 'Check your email for more details!', success: true },
       { status: 200 }
     );
-  } catch (e: any) {
+  } catch (e) {
     // delete user if email sending fails
+    console.error(e);
     await User.deleteOne({ email });
     return NextResponse.json(
       { error: e.message, success: false },
