@@ -8,8 +8,10 @@ import {
   ScrollAreaThumb
 } from '@radix-ui/react-scroll-area';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const BlogsPage = () => {
+  const router = useRouter();
   const [blogs, setBlogs] = useState([] as any[]);
   const fetchBlogs = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`);
@@ -28,7 +30,12 @@ export const BlogsPage = () => {
         <div className="container mx-auto">
           <div className="flex flex-col gap-10">
             <div className="flex flex-col items-start gap-4">
-              <div>
+              <div
+                onClick={() => {
+                  router.push('/');
+                }}
+                className='cursor-pointer flex items-center gap-2 text-primary-foreground'
+              >
                 <Badge>Athena</Badge>
               </div>
               <div className="flex flex-col gap-2">
