@@ -11,7 +11,6 @@ export default function Header() {
         <div className="hidden lg:block">
           <Link
             href={'/'}
-            target="_blank"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
