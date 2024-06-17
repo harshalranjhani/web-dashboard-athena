@@ -39,7 +39,9 @@ export default function Hero() {
                 <Button size={"lg"} onClick={()=>{
                   router.push('/dashboard')
                 }}>Get started</Button>
-                <Button size={"lg"} variant={"outline"}>
+                <Button size={"lg"} variant={"outline"} onClick={()=>{
+                  router.push('/blogs')
+                }}>
                   Learn more
                 </Button>
               </div>
