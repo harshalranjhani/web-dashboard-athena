@@ -100,11 +100,11 @@ export const CellAction: React.FC<any> = ({ data }) => {
           <DropdownMenuItem onClick={() => setViewModalOpen(true)}>
             <Eye className="mr-2 h-4 w-4" /> View
           </DropdownMenuItem>
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             onClick={() => router.push(`/dashboard/user/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem onClick={() => {
             setAlertModalOpen(true);
           }}>
