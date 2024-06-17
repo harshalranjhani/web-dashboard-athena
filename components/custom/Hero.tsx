@@ -1,38 +1,57 @@
 "use client";
-import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Globe from "./Globe";
+import { useRouter } from "next/navigation";
 
-export const Hero = () => (
-  <div className="w-full">
-    <div className="container mx-auto">
-      <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
-        <div>
-          <Button variant="secondary" size="sm" className="gap-4">
-            Read our launch article <MoveRight className="w-4 h-4" />
-          </Button>
+export default function Hero() {
+  const router = useRouter();
+  return (
+    <>
+      {/* Hero */}
+      <div className="relative overflow-hidden py-24 lg:py-32 flex flex-col items-center justify-center min-h-screen">
+        {/* Gradients */}
+        <div
+          aria-hidden="true"
+          className="flex absolute -top-96 start-1/2 transform -translate-x-1/2"
+        >
+          <div className="bg-gradient-to-r from-background/50 to-background blur-3xl w-[25rem] h-[44rem] rotate-[-60deg] transform -translate-x-[10rem]" />
+          <div className="bg-gradient-to-tl blur-3xl w-[90rem] h-[50rem] rounded-full origin-top-left -rotate-12 -translate-x-[15rem] from-primary-foreground via-primary-foreground to-background" />
         </div>
-        <div className="flex gap-4 flex-col">
-          <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
-            This is the start of something new
-          </h1>
-          {/* <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
-            Managing a small business today is already tough. Avoid further
-            complications by ditching outdated, tedious trade methods. Our goal
-            is to streamline SMB trade, making it easier and faster than ever.
-          </p> */}
-          {/* <p>This is the web admin Dashboard for Athena!</p> */}
+        {/* End Gradients */}
+        <div className="relative z-10 w-full flex flex-col items-center">
+          <div className="container py-10 lg:py-16">
+            <div className="max-w-2xl text-center mx-auto">
+              <p className="">A project by Yug Foundation</p>
+              {/* Title */}
+              <div className="mt-5 max-w-2xl mx-auto">
+                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                  Athena
+                </h1>
+              </div>
+              {/* End Title */}
+              <div className="mt-5 max-w-3xl mx-auto">
+                <p className="text-xl text-muted-foreground">
+                  We at YUG Foundation work towards bringing to life and meaning to our motto Sahyog, Seva, Samarpan.
+                </p>
+              </div>
+              {/* Buttons */}
+              <div className="mt-8 gap-3 flex justify-center">
+                <Button size={"lg"} onClick={()=>{
+                  router.push('/dashboard')
+                }}>Get started</Button>
+                <Button size={"lg"} variant={"outline"}>
+                  Learn more
+                </Button>
+              </div>
+              {/* End Buttons */}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-row gap-3">
-          {/* <Button size="lg" className="gap-4" variant="outline">
-            Jump on a call <PhoneCall className="w-4 h-4" />
-          </Button> */}
-          <Button size="lg" className="gap-4" onClick={()=>{
-            window.location.href = "/signup"
-          }}>
-            Sign up here <MoveRight className="w-4 h-4" />
-          </Button>
+        <div className="w-[100vw] flex items-center justify-center">
+          <Globe />
         </div>
       </div>
-    </div>
-  </div>
-);
+      {/* End Hero */}
+    </>
+  );
+}

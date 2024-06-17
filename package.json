@@ -76,9 +76,11 @@
     "@types/bcryptjs": "latest",
     "@types/uuid": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
+    "cobe": "^0.6.3",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "prettier": "latest",
-    "prettier-plugin-tailwindcss": "latest"
+    "prettier-plugin-tailwindcss": "latest",
+    "react-spring": "^9.7.3"
   }
 }

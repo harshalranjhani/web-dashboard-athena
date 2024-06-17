@@ -1,10 +1,10 @@
-import { Hero } from '@/components/custom/Hero'
+import Landing from '@/components/custom/Landing'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>
-        <Hero />
+    <div className='flex justify-center items-center'>
+        <Landing />
     </div>
   )
 }
