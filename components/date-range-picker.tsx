@@ -44,7 +44,13 @@ export const fetchAnalytics = async (
         usersChange: response.data.data.changes.userChange,
         blogsChange: response.data.data.changes.blogChange,
         questionsChange: response.data.data.changes.queryChange,
-        changeDuration: response.data.data.duration.months ? `${response.data.data.duration.months} months` : `${response.data.data.duration.days} days`
+        changeDuration: response.data.data.duration.months
+          ? response.data.data.duration.months > 1
+            ? `${response.data.data.duration.months} months`
+            : `${response.data.data.duration.months} month`
+          : response.data.data.duration.days > 1
+            ? `${response.data.data.duration.days} days`
+            : `${response.data.data.duration.days} day`
       })
     );
     toast({
@@ -57,7 +63,7 @@ export const fetchAnalytics = async (
     console.error(e);
     toast({
       duration: 1000,
-      variant: "destructive",
+      variant: 'destructive',
       title: 'Something went wrong!',
       description: e.message
     });
