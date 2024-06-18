@@ -7,6 +7,10 @@ import { useSelector } from 'react-redux';
 const Questions = () => {
 
   const totalQuestions = useSelector((state: any) => state.analytics.totalQuestions);
+  const questionsChange = useSelector((state: any) => state.analytics.questionsChange);
+  const changeDuration = useSelector(
+    (state: any) => state.analytics.changeDuration
+  );
 
   return (
     <div>
@@ -29,7 +33,9 @@ const Questions = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{totalQuestions}</div>
-          <p className="text-xs text-muted-foreground">+19% from last month</p>
+          <p className="text-xs text-muted-foreground">
+            {questionsChange} from last {changeDuration}
+          </p>
         </CardContent>
       </Card>
     </div>

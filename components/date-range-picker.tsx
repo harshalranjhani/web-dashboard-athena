@@ -37,10 +37,14 @@ export const fetchAnalytics = async (
     );
     dispatch(
       analyticsActions.setData({
-        totalUsers: response.data.data.totalUsers,
-        totalBlogs: response.data.data.totalBlogs,
-        totalQuestions: response.data.data.questions.length,
-        questions: response.data.data.questions
+        totalUsers: response.data.data.currentPeriod.totalUsers,
+        totalBlogs: response.data.data.currentPeriod.totalBlogs,
+        totalQuestions: response.data.data.currentPeriod.questions.length,
+        questions: response.data.data.currentPeriod.questions,
+        usersChange: response.data.data.changes.userChange,
+        blogsChange: response.data.data.changes.blogChange,
+        questionsChange: response.data.data.changes.queryChange,
+        changeDuration: response.data.data.duration.months ? `${response.data.data.duration.months} months` : `${response.data.data.duration.days} days`
       })
     );
     toast({
@@ -50,6 +54,7 @@ export const fetchAnalytics = async (
         'New analytics data has been updated according to the selected date range.'
     });
   } catch (e: any) {
+    console.error(e);
     toast({
       duration: 1000,
       variant: "destructive",

@@ -9,6 +9,10 @@ const Users = () => {
   const startDate = useSelector((state: any) => state.analytics.startDate);
   const endDate = useSelector((state: any) => state.analytics.endDate);
   const totalUsers = useSelector((state: any) => state.analytics.totalUsers);
+  const usersChange = useSelector((state: any) => state.analytics.usersChange);
+  const changeDuration = useSelector(
+    (state: any) => state.analytics.changeDuration
+  );
 
   return (
     <Card>
@@ -29,7 +33,9 @@ const Users = () => {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{totalUsers}</div>
-        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+        <p className="text-xs text-muted-foreground">
+          {usersChange} from last {changeDuration}
+        </p>
       </CardContent>
     </Card>
   );
