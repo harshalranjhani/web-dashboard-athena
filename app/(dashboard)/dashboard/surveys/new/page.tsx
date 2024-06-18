@@ -64,6 +64,7 @@ export default function SurveyCreatePage() {
         }
       );
       const data = await response.json();
+      alert(data);
       if (data.status === 201) {
         toast({
           duration: 2000,
@@ -81,12 +82,13 @@ export default function SurveyCreatePage() {
           description: 'Failed to create survey'
         });
       }
-    } catch (e) {
+    } catch (e: any) {
+      alert(e);
       toast({
         duration: 2000,
         title: 'An error occurred',
         variant: "destructive",
-        description: 'Failed to create survey'
+        description: e.message,
       });
     }
   };

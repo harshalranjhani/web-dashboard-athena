@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import { User } from '@/models/user';
 import { connectToDatabase } from '@/lib/mongodb';
+import { getPasswordHTML } from '@/utils/mails/password';
 
 const sendEmail = async (email, password) => {
   try {
@@ -16,15 +17,10 @@ const sendEmail = async (email, password) => {
     });
 
     let mailDetails = {
-      from: 'noreply@harshalranjhani.in',
+      from: 'Athena<noreply@harshalranjhani.in>',
       to: email,
       subject: `Hey there! Welcome to Athena - Yug Foundation!`,
-      text: `
-              Hi there!
-              Your password is: ${password}
-              Please note that this password cannot be changed. Please keep it safe.
-              Continue to login at https://web-dashboard-athena-hr64.vercel.app/signin
-            `
+      html: getPasswordHTML(password)
     };
 
     const info = await mailTransporter.sendMail(mailDetails);
