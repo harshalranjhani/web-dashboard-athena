@@ -60,10 +60,10 @@ export function DataTable<TData, TValue>({
         {searchKey !== "name" && <Button
           className="text-xs md:text-sm"
           onClick={() => {
-            router.push(`/dashboard/${searchKey === "title" ? "blogs" : "surveys"}/new`);
+            router.push(`/dashboard/${window.location.pathname.includes("blogs") ? "blogs" : window.location.pathname.includes("quiz") ? "quizzes": "surveys"}/new`);
           }}
         >
-        {searchKey === "title" ? "Create Blog" : "Create Survey"}
+        {window.location.pathname.includes("blogs") ? "Create Blog" : window.location.pathname.includes("quiz") ? "Create quiz": "Create Survey"}
         </Button>}
       </div>
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
