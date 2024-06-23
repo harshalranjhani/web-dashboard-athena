@@ -9,6 +9,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import axios from 'axios';
 
 interface Question {
   text: string;
@@ -23,7 +25,7 @@ export default function SurveyCreatePage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [questions, setQuestions] = useState<Question[]>([
-    { text: '', type: '', option1: '', option2: '', option3: '', option4: '' }
+    { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '' }
   ]);
   const { toast } = useToast();
   const router = useRouter();
@@ -38,7 +40,7 @@ export default function SurveyCreatePage() {
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { text: '', type: '', option1: '', option2: '', option3: '', option4: '' }
+      { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '' }
     ]);
   };
 
@@ -81,38 +83,26 @@ export default function SurveyCreatePage() {
       return;
     }
 
-    console.log({
-      topic: title,
-      description,
-      questions: questionDtos,
-      userId: 1
-    });
-
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/survey`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            topic: title,
-            description,
-            questions: questionDtos,
-            userId: 1
-          })
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      if (data.status === 201) {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/survey`, {
+        topic: title,
+        description,
+        questions: questionDtos,
+        userId: 1
+      });
+      const data = await response.data
+      if (response.status === 201) {
         toast({
           duration: 2000,
           title: 'Survey created successfully!'
         });
         // add the survey to the surveys array
-        const newSurveys = [...surveys, data.data];
+        const newSurveys = [...surveys, {
+          topic: title,
+          description,
+          questions: questionDtos,
+          userId: 1
+        }];
         dispatch(analyticsActions.setSurveys({ surveys: newSurveys }));
         router.replace('/dashboard/surveys');
       } else {
@@ -124,7 +114,6 @@ export default function SurveyCreatePage() {
         });
       }
     } catch (e: any) {
-      alert(e);
       toast({
         duration: 2000,
         title: 'An error occurred',
@@ -184,46 +173,58 @@ export default function SurveyCreatePage() {
                     }
                     className="text-base"
                   />
-                  <Input
-                    placeholder={`Question ${index + 1} Type`}
-                    value={question.type}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(index, 'type', e.target.value)
-                    }
-                    className="text-base"
-                  />
-                  <Input
-                    placeholder={`Question ${index + 1} Option 1`}
-                    value={question.option1}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(index, 'option1', e.target.value)
-                    }
-                    className="text-base"
-                  />
-                  <Input
-                    placeholder={`Question ${index + 1} Option 2`}
-                    value={question.option2}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(index, 'option2', e.target.value)
-                    }
-                    className="text-base"
-                  />
-                  <Input
-                    placeholder={`Question ${index + 1} Option 3`}
-                    value={question.option3}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(index, 'option3', e.target.value)
-                    }
-                    className="text-base"
-                  />
-                  <Input
-                    placeholder={`Question ${index + 1} Option 4`}
-                    value={question.option4}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(index, 'option4', e.target.value)
-                    }
-                    className="text-base"
-                  />
+                  <Select
+                    onValueChange={(value) => handleQuestionChange(index, 'type', value)}
+                    defaultValue={question.type}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Question Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Question Type</SelectLabel>
+                        <SelectItem value="MULTIPLE_CHOICE">Multiple Choice</SelectItem>
+                        <SelectItem value="OPEN_ENDED">Open Ended</SelectItem>
+                        <SelectItem value="BOOLEAN">True/False</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {question.type === 'MULTIPLE_CHOICE' && (
+                    <>
+                      <Input
+                        placeholder={`Question ${index + 1} Option 1`}
+                        value={question.option1}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          handleQuestionChange(index, 'option1', e.target.value)
+                        }
+                        className="text-base"
+                      />
+                      <Input
+                        placeholder={`Question ${index + 1} Option 2`}
+                        value={question.option2}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          handleQuestionChange(index, 'option2', e.target.value)
+                        }
+                        className="text-base"
+                      />
+                      <Input
+                        placeholder={`Question ${index + 1} Option 3`}
+                        value={question.option3}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          handleQuestionChange(index, 'option3', e.target.value)
+                        }
+                        className="text-base"
+                      />
+                      <Input
+                        placeholder={`Question ${index + 1} Option 4`}
+                        value={question.option4}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          handleQuestionChange(index, 'option4', e.target.value)
+                        }
+                        className="text-base"
+                      />
+                    </>
+                  )}
                 </div>
               ))}
               <Button type="button" onClick={addQuestion}>

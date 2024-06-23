@@ -16,6 +16,7 @@ export const SurveyClient: React.FC<any> = ({ }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const surveys = useSelector((state: any) => state.analytics.surveys);
+  console.log(surveys);
   const fetchSurveys = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/survey`);
     dispatch(analyticsActions.setSurveys({surveys: res.data}))

@@ -9,7 +9,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Question {
   text: string;
@@ -18,12 +17,13 @@ interface Question {
   option2: string;
   option3: string;
   option4: string;
+  correctAnswer: string;
 }
 
 export default function QuizCreatePage() {
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState<Question[]>([
-    { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '' }
+    { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '', correctAnswer: '' }
   ]);
   const { toast } = useToast();
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function QuizCreatePage() {
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '' }
+      { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '', correctAnswer: '' }
     ]);
   };
 
@@ -58,15 +58,16 @@ export default function QuizCreatePage() {
     const questionDtos = questions.map((q) => ({
       text: q.text,
       type: q.type,
-      options: [q.option1, q.option2, q.option3, q.option4].filter(opt => opt !== '')
+      options: [q.option1, q.option2, q.option3, q.option4].filter(opt => opt !== ''),
+      correctAnswer: q.correctAnswer
     }));
 
-    if (questionDtos.length === 0 || questionDtos.some(q => q.text.trim() === '' || q.type.trim() === '')) {
+    if (questionDtos.length === 0 || questionDtos.some(q => q.text.trim() === '' || q.correctAnswer.trim() === '')) {
       toast({
         duration: 2000,
         title: 'Validation error',
         variant: 'destructive',
-        description: 'At least one valid question is required with text and type.'
+        description: 'At least one valid question is required with text and correct answer.'
       });
       return;
     }
@@ -148,50 +149,36 @@ export default function QuizCreatePage() {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'text', e.target.value)}
                     className="text-base"
                   />
-                  <Select
-                    onValueChange={(value) => handleQuestionChange(index, 'type', value)}
-                    defaultValue={question.type}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Question Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Question Type</SelectLabel>
-                        <SelectItem value="MULTIPLE_CHOICE">Multiple Choice</SelectItem>
-                        <SelectItem value="OPEN_ENDED">Open Ended</SelectItem>
-                        <SelectItem value="BOOLEAN">True/False</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  {question.type === 'MULTIPLE_CHOICE' && (
-                    <>
-                      <Input
-                        placeholder={`Question ${index + 1} Option 1`}
-                        value={question.option1}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option1', e.target.value)}
-                        className="text-base"
-                      />
-                      <Input
-                        placeholder={`Question ${index + 1} Option 2`}
-                        value={question.option2}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option2', e.target.value)}
-                        className="text-base"
-                      />
-                      <Input
-                        placeholder={`Question ${index + 1} Option 3`}
-                        value={question.option3}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option3', e.target.value)}
-                        className="text-base"
-                      />
-                      <Input
-                        placeholder={`Question ${index + 1} Option 4`}
-                        value={question.option4}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option4', e.target.value)}
-                        className="text-base"
-                      />
-                    </>
-                  )}
+                  <Input
+                    placeholder={`Question ${index + 1} Option 1`}
+                    value={question.option1}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option1', e.target.value)}
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 2`}
+                    value={question.option2}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option2', e.target.value)}
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 3`}
+                    value={question.option3}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option3', e.target.value)}
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 4`}
+                    value={question.option4}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option4', e.target.value)}
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Correct Answer for Question ${index + 1}`}
+                    value={question.correctAnswer}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'correctAnswer', e.target.value)}
+                    className="text-base"
+                  />
                 </div>
               ))}
               <Button type="button" onClick={addQuestion}>
