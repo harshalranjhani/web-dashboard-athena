@@ -12,6 +12,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { User } from '@/constants/data';
 import { analyticsActions } from '@/utils/store/analytics-slice';
+import axios from 'axios';
 import { Edit, MoreHorizontal, Trash, Eye } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -32,17 +33,8 @@ export const CellAction: React.FC<any> = ({ data }) => {
     // delete the survey
     try {
       setAlertModalLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/survey/${data.id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-      const respData = await response.json();
-      if (respData.status === 200) {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/survey/${data.id}`);
+      if (response.status === 200) {
         toast({
           duration: 2000,
           title: 'Survey deleted successfully'
@@ -56,19 +48,20 @@ export const CellAction: React.FC<any> = ({ data }) => {
         toast({
           duration: 2000,
           title: 'An error occurred.',
-          description: 'Failed to delete survey',
+          description: 'Failed to delete survey.',
           variant: 'destructive'
         });
       }
       setAlertModalLoading(false);
       setAlertModalOpen(false);
-    } catch (e) {
+    } catch (e: any) {
+      console.log(e);
       setAlertModalLoading(false);
       setAlertModalOpen(false);
       toast({
         duration: 2000,
         title: 'An error occurred.',
-        description: 'Failed to delete survey',
+        description: "Failed to delete survey.",
         variant: 'destructive'
       });
     }

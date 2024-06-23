@@ -12,14 +12,18 @@ import { analyticsActions } from '@/utils/store/analytics-slice';
 
 interface Question {
   text: string;
-  correctAnswer: string;
+  type: string;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
 }
 
 export default function SurveyCreatePage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [questions, setQuestions] = useState<Question[]>([
-    { text: '', correctAnswer: '' }
+    { text: '', type: '', option1: '', option2: '', option3: '', option4: '' }
   ]);
   const { toast } = useToast();
   const router = useRouter();
@@ -32,7 +36,10 @@ export default function SurveyCreatePage() {
   ];
 
   const addQuestion = () => {
-    setQuestions([...questions, { text: '', correctAnswer: '' }]);
+    setQuestions([
+      ...questions,
+      { text: '', type: '', option1: '', option2: '', option3: '', option4: '' }
+    ]);
   };
 
   const removeQuestion = (index: number) => {
@@ -52,6 +59,35 @@ export default function SurveyCreatePage() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    const questionDtos = questions.map((q) => ({
+      text: q.text,
+      type: q.type,
+      options: [q.option1, q.option2, q.option3, q.option4].filter(
+        (opt) => opt !== ''
+      )
+    }));
+
+    if (
+      questionDtos.length === 0 ||
+      questionDtos.some((q) => q.text.trim() === '' || q.type.trim() === '')
+    ) {
+      toast({
+        duration: 2000,
+        title: 'Validation error',
+        variant: 'destructive',
+        description:
+          'At least one valid question is required with text and type.'
+      });
+      return;
+    }
+
+    console.log({
+      topic: title,
+      description,
+      questions: questionDtos,
+      userId: 1
+    });
+
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/survey`,
@@ -60,11 +96,16 @@ export default function SurveyCreatePage() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ topic: title, description, userId: 1 })
+          body: JSON.stringify({
+            topic: title,
+            description,
+            questions: questionDtos,
+            userId: 1
+          })
         }
       );
       const data = await response.json();
-      alert(data);
+      console.log(data);
       if (data.status === 201) {
         toast({
           duration: 2000,
@@ -78,7 +119,7 @@ export default function SurveyCreatePage() {
         toast({
           duration: 2000,
           title: 'An error occurred',
-          variant: "destructive",
+          variant: 'destructive',
           description: 'Failed to create survey'
         });
       }
@@ -87,8 +128,8 @@ export default function SurveyCreatePage() {
       toast({
         duration: 2000,
         title: 'An error occurred',
-        variant: "destructive",
-        description: e.message,
+        variant: 'destructive',
+        description: e.message
       });
     }
   };
@@ -119,21 +160,24 @@ export default function SurveyCreatePage() {
                 className="text-lg"
               />
             </div>
-            {/* <div className="space-y-6">
+            <h1 className="text-3xl">Add Questions to the survey.</h1>
+            <div className="space-y-6">
               {questions.map((question, index) => (
-                <div key={index} className="space-y-2 border-b pb-4 relative">
-                  <div className="flex justify-between items-center">
+                <div key={index} className="relative space-y-2 border-b pb-4">
+                  <div className="flex items-center justify-between">
                     <p className="font-medium">Question {index + 1}</p>
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => removeQuestion(index)}
-                    >
-                      <X className="h-5 w-5" />
-                    </Button>
+                    {questions.length > 1 && (
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => removeQuestion(index)}
+                      >
+                        <X className="h-5 w-5" />
+                      </Button>
+                    )}
                   </div>
                   <Input
-                    placeholder={`Question ${index + 1}`}
+                    placeholder={`Question ${index + 1} Text`}
                     value={question.text}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       handleQuestionChange(index, 'text', e.target.value)
@@ -141,10 +185,42 @@ export default function SurveyCreatePage() {
                     className="text-base"
                   />
                   <Input
-                    placeholder="Correct Answer"
-                    value={question.correctAnswer}
+                    placeholder={`Question ${index + 1} Type`}
+                    value={question.type}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(index, 'correctAnswer', e.target.value)
+                      handleQuestionChange(index, 'type', e.target.value)
+                    }
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 1`}
+                    value={question.option1}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleQuestionChange(index, 'option1', e.target.value)
+                    }
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 2`}
+                    value={question.option2}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleQuestionChange(index, 'option2', e.target.value)
+                    }
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 3`}
+                    value={question.option3}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleQuestionChange(index, 'option3', e.target.value)
+                    }
+                    className="text-base"
+                  />
+                  <Input
+                    placeholder={`Question ${index + 1} Option 4`}
+                    value={question.option4}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleQuestionChange(index, 'option4', e.target.value)
                     }
                     className="text-base"
                   />
@@ -153,7 +229,7 @@ export default function SurveyCreatePage() {
               <Button type="button" onClick={addQuestion}>
                 Add Question
               </Button>
-            </div> */}
+            </div>
             <Button type="submit">Create Survey</Button>
           </div>
         </form>

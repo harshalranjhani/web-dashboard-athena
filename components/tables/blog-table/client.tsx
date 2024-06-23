@@ -18,7 +18,7 @@ export const BlogClient: React.FC<any> = ({ }) => {
   const blogs = useSelector((state: any) => state.analytics.blogs);
 
   const fetchBlogs = async () => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/blog`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/blog/all`);
     dispatch(analyticsActions.setBlogs({blogs: res.data.data}))
   };
 
@@ -32,7 +32,7 @@ export const BlogClient: React.FC<any> = ({ }) => {
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Blogs (${blogs.length})`}
+          title={`Blogs (${blogs?.length})`}
           description="List of all blogs in the system"
         />
       </div>

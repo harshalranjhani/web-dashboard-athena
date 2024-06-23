@@ -31,7 +31,7 @@ export const SurveyClient: React.FC<any> = ({ }) => {
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Surveys (${surveys.length})`}
+          title={`Surveys (${surveys?.length})`}
           description="List of all surveys in the system"
         />
       </div>
