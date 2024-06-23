@@ -12,6 +12,7 @@ const analyticsSlice = createSlice({
     users: [],
     surveys: [],
     blogs: [],
+    quizzes: [],
     blogsChange: "",
     questionsChange: "",
     usersChange: "",
@@ -42,6 +43,9 @@ const analyticsSlice = createSlice({
     },
     setBlogs(state, action) {
       state.blogs = action.payload.blogs;
+    },
+    setQuizzes(state, action) {
+      state.quizzes = action.payload.quizzes;
     }
   }
 });

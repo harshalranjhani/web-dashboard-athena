@@ -41,10 +41,6 @@ export const ViewModal: React.FC<AlertModalProps> = ({
                 <p className="font-semibold">{`Question ${index + 1}:`}</p>
                 <p className="mt-2">{question.text}</p>
                 <p className="mt-1 text-sm text-gray-500">
-                  <span className="font-medium">Correct Answer: </span>
-                  {question.correctAnswer}
-                </p>
-                <p className="mt-1 text-sm text-gray-500">
                   <span className="font-medium">Question type: </span>
                   {question.type}
                 </p>

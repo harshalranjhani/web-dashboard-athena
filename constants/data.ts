@@ -123,6 +123,12 @@ export const navItems: NavItem[] = [
     href: "/dashboard/surveys",
     icon: "media",
     label: "surveys"
+  },
+  {
+    title: "Quizzes",
+    href: "/dashboard/quizzes",
+    icon: "question",
+    label: "quizzes"
   }
   // {
   //   title: 'Login',
