@@ -40,10 +40,12 @@ export const fetchAnalytics = async (
         totalUsers: response.data.data.currentPeriod.totalUsers,
         totalBlogs: response.data.data.currentPeriod.totalBlogs,
         totalQuestions: response.data.data.currentPeriod.questions.length,
+        totalSurveys: response.data.data.currentPeriod.totalSurveys,
         questions: response.data.data.currentPeriod.questions,
         usersChange: response.data.data.changes.userChange,
         blogsChange: response.data.data.changes.blogChange,
         questionsChange: response.data.data.changes.queryChange,
+        surveysChange: response.data.data.changes.surveyChange,
         changeDuration: response.data.data.duration.months
           ? response.data.data.duration.months > 1
             ? `${response.data.data.duration.months} months`

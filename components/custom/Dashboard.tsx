@@ -1,5 +1,5 @@
 "use client";
-import ActiveUsers from '@/components/custom/ActiveUsers';
+import Surveys from '@/components/custom/Surveys';
 import Blogs from '@/components/custom/Blogs';
 import Questions from '@/components/custom/Questions';
 import Users from '@/components/custom/Users';
@@ -66,7 +66,7 @@ const Dashboard = () => {
                 <Users />
                 <Blogs />
                 <Questions />
-                <ActiveUsers />
+                <Surveys />
               </div>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <Card className="col-span-4 bg-card text-card-foreground">

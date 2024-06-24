@@ -8,6 +8,7 @@ const analyticsSlice = createSlice({
     totalUsers: 0,
     totalBlogs: 0,
     totalQuestions: 0,
+    totalSurveys: 0,
     questions: [],
     users: [],
     surveys: [],
@@ -16,7 +17,8 @@ const analyticsSlice = createSlice({
     blogsChange: "",
     questionsChange: "",
     usersChange: "",
-    changeDuration: ""
+    changeDuration: "",
+    surveysChange: ""
   },
   reducers: {
     setStartDate(state, action) {
@@ -34,6 +36,8 @@ const analyticsSlice = createSlice({
       state.blogsChange = action.payload.blogsChange;
       state.questionsChange = action.payload.questionsChange;
       state.changeDuration = action.payload.changeDuration;
+      state.totalSurveys = action.payload.totalSurveys;
+      state.surveysChange = action.payload.surveysChange;
     },
     setUsers(state, action) {
       state.users = action.payload.users;
