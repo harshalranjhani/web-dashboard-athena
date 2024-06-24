@@ -17,20 +17,21 @@ const QuestionComponent = ({ question }) => {
     return acc;
   }, {});
 
+  const pieChartColors = [
+    '#D31F16', '#EB781A', '#F3BE33', '#FDFDFD', '#73504B',
+    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+    '#FF9F40', '#FFCD56', '#4B0082', '#9400D3', '#8B0000',
+    '#FF4500', '#FFD700', '#ADFF2F', '#00FF7F', '#4682B4'
+  ];
+  
+
   const ageChartData = {
     labels: Object.keys(ageData),
     datasets: [
       {
         label: 'Age Distribution',
         data: Object.values(ageData),
-        backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#4BC0C0',
-          '#9966FF',
-          '#FF9F40'
-        ],
+        backgroundColor: pieChartColors,
       },
     ],
   };
@@ -41,14 +42,7 @@ const QuestionComponent = ({ question }) => {
       {
         label: 'Gender Distribution',
         data: Object.values(genderData),
-        backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#4BC0C0',
-          '#9966FF',
-          '#FF9F40'
-        ],
+        backgroundColor: pieChartColors,
       },
     ],
   };
