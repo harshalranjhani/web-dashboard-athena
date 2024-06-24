@@ -115,7 +115,12 @@ export default function QuizCreatePage() {
           duration: 2000,
           title: 'Quiz created successfully!',
         });
-        const newQuizzes = [...quizzes, data.data];
+        const newQuizzes = [...quizzes, {
+          topic: title,
+          questions: questionDtos,
+          userId: 1,
+          created: new Date().toISOString(),
+        }];
         dispatch(analyticsActions.setQuizzes({ quizzes: newQuizzes }));
         router.replace('/dashboard/quizzes');
       } else {
