@@ -2,6 +2,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
 import { Checkbox } from '@/components/ui/checkbox';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<any>[] = [
   // {
@@ -24,17 +25,23 @@ export const columns: ColumnDef<any>[] = [
   //   enableHiding: false
   // },
   {
-    accessorKey: 'authorName',
-    header: 'AUTHOR'
+    accessorKey: 'topic',
+    header: 'TOPIC'
   },
   {
-    accessorKey: 'title',
-    header: 'TITLE'
+    accessorKey: 'created',
+    header: 'CREATED',
+    cell: ({ row }) => format(new Date(row.original.created), 'dd/MM/yyyy'),
   },
   {
-    accessorKey: 'region',
-    header: 'REGION'
+    header: 'NUMBER OF QUESTIONS',
+    accessorFn: row => row.questions.length,
+    cell: ({ row }) => row.original.questions.length, 
   },
+//   {
+//     accessorKey: 'region',
+//     header: 'REGION'
+//   },
   // {
   //   accessorKey: 'gender',
   //   header: 'GENDER'

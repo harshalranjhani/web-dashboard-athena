@@ -13,7 +13,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { User } from '@/constants/data';
 import { analyticsActions } from '@/utils/store/analytics-slice';
 import axios from 'axios';
-import { Edit, MoreHorizontal, Trash, Eye } from 'lucide-react';
+import { Edit, MoreHorizontal, Trash, Eye, TextQuote } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,7 +55,6 @@ export const CellAction: React.FC<any> = ({ data }) => {
       setAlertModalLoading(false);
       setAlertModalOpen(false);
     } catch (e: any) {
-      console.log(e);
       setAlertModalLoading(false);
       setAlertModalOpen(false);
       toast({
@@ -98,6 +97,11 @@ export const CellAction: React.FC<any> = ({ data }) => {
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem> */}
+                    <DropdownMenuItem
+            onClick={() => router.push(`/dashboard/surveys/responses/${data.id}`)}
+          >
+            <TextQuote className="mr-2 h-4 w-4" /> View Responses
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => {
             setAlertModalOpen(true);
           }}>

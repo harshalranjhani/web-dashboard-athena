@@ -9,6 +9,15 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Question {
   text: string;
@@ -23,7 +32,15 @@ interface Question {
 export default function QuizCreatePage() {
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState<Question[]>([
-    { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '', correctAnswer: '' }
+    {
+      text: '',
+      type: 'MULTIPLE_CHOICE',
+      option1: '',
+      option2: '',
+      option3: '',
+      option4: '',
+      correctAnswer: '',
+    },
   ]);
   const { toast } = useToast();
   const router = useRouter();
@@ -32,13 +49,21 @@ export default function QuizCreatePage() {
 
   const breadcrumbItems = [
     { title: 'Quizzes', link: '/dashboard/quizzes' },
-    { title: 'Create', link: '/dashboard/quiz/create' }
+    { title: 'Create', link: '/dashboard/quiz/create' },
   ];
 
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { text: '', type: 'MULTIPLE_CHOICE', option1: '', option2: '', option3: '', option4: '', correctAnswer: '' }
+      {
+        text: '',
+        type: 'MULTIPLE_CHOICE',
+        option1: '',
+        option2: '',
+        option3: '',
+        option4: '',
+        correctAnswer: '',
+      },
     ]);
   };
 
@@ -58,43 +83,37 @@ export default function QuizCreatePage() {
     const questionDtos = questions.map((q) => ({
       text: q.text,
       type: q.type,
-      options: [q.option1, q.option2, q.option3, q.option4].filter(opt => opt !== ''),
-      correctAnswer: q.correctAnswer
+      options: [q.option1, q.option2, q.option3, q.option4].filter((opt) => opt !== ''),
+      correctAnswer: q.correctAnswer,
     }));
 
-    if (questionDtos.length === 0 || questionDtos.some(q => q.text.trim() === '' || q.correctAnswer.trim() === '')) {
+    if (questionDtos.length === 0 || questionDtos.some((q) => q.text.trim() === '' || q.correctAnswer.trim() === '')) {
       toast({
         duration: 2000,
         title: 'Validation error',
         variant: 'destructive',
-        description: 'At least one valid question is required with text and correct answer.'
+        description: 'At least one valid question is required with text and correct answer.',
       });
       return;
     }
-
-    console.log({
-      topic: title,
-      questions: questionDtos,
-      userId: 1
-    });
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quiz`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           topic: title,
           questions: questionDtos,
-          userId: 1
-        })
+          userId: 1,
+        }),
       });
       const data = await response.json();
-      if (data.status === 201) {
+      if (response.status === 201) {
         toast({
           duration: 2000,
-          title: 'Quiz created successfully!'
+          title: 'Quiz created successfully!',
         });
         const newQuizzes = [...quizzes, data.data];
         dispatch(analyticsActions.setQuizzes({ quizzes: newQuizzes }));
@@ -104,7 +123,7 @@ export default function QuizCreatePage() {
           duration: 2000,
           title: 'An error occurred',
           variant: 'destructive',
-          description: 'Failed to create quiz'
+          description: 'Failed to create quiz',
         });
       }
     } catch (e: any) {
@@ -112,7 +131,7 @@ export default function QuizCreatePage() {
         duration: 2000,
         title: 'An error occurred',
         variant: 'destructive',
-        description: e.message
+        description: e.message,
       });
     }
   };
@@ -173,12 +192,23 @@ export default function QuizCreatePage() {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'option4', e.target.value)}
                     className="text-base"
                   />
-                  <Input
-                    placeholder={`Correct Answer for Question ${index + 1}`}
+                  <Select
                     value={question.correctAnswer}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuestionChange(index, 'correctAnswer', e.target.value)}
-                    className="text-base"
-                  />
+                    onValueChange={(value) => handleQuestionChange(index, 'correctAnswer', value)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Correct Answer" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Correct Answer</SelectLabel>
+                        {question.option1 && <SelectItem value={question.option1}>{question.option1}</SelectItem>}
+                        {question.option2 && <SelectItem value={question.option2}>{question.option2}</SelectItem>}
+                        {question.option3 && <SelectItem value={question.option3}>{question.option3}</SelectItem>}
+                        {question.option4 && <SelectItem value={question.option4}>{question.option4}</SelectItem>}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               ))}
               <Button type="button" onClick={addQuestion}>

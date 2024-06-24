@@ -1,6 +1,6 @@
 'use client';
 import { AlertModal } from '@/components/modal/alert-modal';
-import { BlogViewModal } from '@/components/modal/view-blog-modal';
+import { ViewModal } from '@/components/modal/view-quiz-modal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -82,7 +82,7 @@ export const CellAction: React.FC<any> = ({ data }) => {
         onConfirm={onConfirm}
         loading={alertModalLoading}
       />
-      <BlogViewModal
+      <ViewModal
         isOpen={viewModalOpen}
         onClose={() => setViewModalOpen(false)}
         loading={viewModalLoading}
@@ -100,11 +100,11 @@ export const CellAction: React.FC<any> = ({ data }) => {
           <DropdownMenuItem onClick={() => setViewModalOpen(true)}>
             <Eye className="mr-2 h-4 w-4" /> View
           </DropdownMenuItem>
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             onClick={() => router.push(`/dashboard/blogs/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem onClick={() => {
             setAlertModalOpen(true);
           }}>
