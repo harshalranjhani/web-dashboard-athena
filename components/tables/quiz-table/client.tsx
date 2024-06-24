@@ -35,7 +35,7 @@ export const QuizClient: React.FC<any> = ({}) => {
         />
       </div>
       <Separator />
-      <DataTable searchKey="title" columns={columns} data={quizzes} />
+      <DataTable tableType='quiz' searchKey="title" columns={columns} data={quizzes} />
     </>
   );
 };

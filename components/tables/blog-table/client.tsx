@@ -37,7 +37,7 @@ export const BlogClient: React.FC<any> = ({ }) => {
         />
       </div>
       <Separator />
-      <DataTable searchKey="title" columns={columns} data={blogs} />
+      <DataTable tableType="blog" searchKey="title" columns={columns} data={blogs} />
     </>
   );
 };

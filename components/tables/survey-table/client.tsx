@@ -36,7 +36,7 @@ export const SurveyClient: React.FC<any> = ({ }) => {
         />
       </div>
       <Separator />
-      <DataTable searchKey="topic" columns={columns} data={surveys} />
+      <DataTable tableType="survey" searchKey="topic" columns={columns} data={surveys} />
     </>
   );
 };

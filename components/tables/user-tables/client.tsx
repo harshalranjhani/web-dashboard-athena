@@ -33,7 +33,7 @@ export const UserClient: React.FC<any> = ({}) => {
         />
       </div>
       <Separator />
-      <DataTable searchKey="name" columns={columns} data={users} />
+      <DataTable tableType="user" searchKey="name" columns={columns} data={users} />
     </>
   );
 };

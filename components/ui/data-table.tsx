@@ -26,19 +26,21 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
+  tableType: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchKey
+  searchKey,
+  tableType
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), // Added pagination hook
+    getPaginationRowModel: getPaginationRowModel() // Added pagination hook
   });
 
   const router = useRouter();
@@ -57,14 +59,28 @@ export function DataTable<TData, TValue>({
           }
           className="w-full md:max-w-sm"
         />
-        {searchKey !== "name" && <Button
-          className="text-xs md:text-sm"
-          onClick={() => {
-            router.push(`/dashboard/${window.location.pathname.includes("blogs") ? "blogs" : window.location.pathname.includes("quiz") ? "quizzes": "surveys"}/new`);
-          }}
-        >
-        {window.location.pathname.includes("blogs") ? "Create Blog" : window.location.pathname.includes("quiz") ? "Create quiz": "Create Survey"}
-        </Button>}
+        {searchKey !== 'name' && (
+          <Button
+            className="text-xs md:text-sm"
+            onClick={() => {
+              router.push(
+                `/dashboard/${
+                  tableType === 'blog'
+                    ? 'blogs'
+                    : tableType === 'quiz'
+                      ? 'quizzes'
+                      : 'surveys'
+                }/new`
+              );
+            }}
+          >
+            {tableType === 'blog'
+              ? 'Create Blog'
+              : tableType === 'quiz'
+                ? 'Create quiz'
+                : 'Create Survey'}
+          </Button>
+        )}
       </div>
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
         <Table className="relative">
