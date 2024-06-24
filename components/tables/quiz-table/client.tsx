@@ -19,6 +19,7 @@ export const QuizClient: React.FC<any> = ({}) => {
 
   const fetchQuizzes = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/quiz`);
+    console.log(res.data);
     dispatch(analyticsActions.setQuizzes({ quizzes: res.data }));
   };
 

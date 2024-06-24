@@ -12,6 +12,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { User } from '@/constants/data';
 import { analyticsActions } from '@/utils/store/analytics-slice';
+import axios from 'axios';
 import { Edit, MoreHorizontal, Trash, Eye } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -23,40 +24,32 @@ export const CellAction: React.FC<any> = ({ data }) => {
   const [viewModalLoading, setViewModalLoading] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [alertModalOpen, setAlertModalOpen] = useState(false);
-  const router = useRouter();
   const { toast } = useToast();
-  const blogs = useSelector((state: any) => state.analytics.blogs);
+  const quizzes = useSelector((state: any) => state.analytics.quizzes);
   const dispatch = useDispatch();
 
   const onConfirm = async () => {
-    // delete the blog
+    // delete the quiz
     try {
       setAlertModalLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/blog/${data.id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/quiz/${data.id}`
       );
-      const respData = await response.json();
-      if (respData.status === 200) {
+      if (response.status === 200) {
         toast({
           duration: 2000,
-          title: 'Blog deleted successfully'
+          title: 'Quiz deleted successfully'
         });
-        // delete the Blog from the Blogs array
-        const newBlogs = blogs.filter(
-          (blog: any) => blog.id !== data.id
+        // delete the Quiz from the Blogs array
+        const newQuizzes = quizzes.filter(
+          (quiz: any) => quiz.id !== data.id
         );
-        dispatch(analyticsActions.setBlogs({ blogs: newBlogs }));
+        dispatch(analyticsActions.setQuizzes({ quizzes: newQuizzes }));
       } else {
         toast({
           duration: 2000,
           title: 'An error occurred.',
-          description: 'Failed to delete blog',
+          description: 'Failed to delete quiz',
           variant: 'destructive'
         });
       }
@@ -68,7 +61,7 @@ export const CellAction: React.FC<any> = ({ data }) => {
       toast({
         duration: 2000,
         title: 'An error occurred.',
-        description: 'Failed to delete blog',
+        description: 'Failed to delete quiz',
         variant: 'destructive'
       });
     }
@@ -101,7 +94,7 @@ export const CellAction: React.FC<any> = ({ data }) => {
             <Eye className="mr-2 h-4 w-4" /> View
           </DropdownMenuItem>
           {/* <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/blogs/${data.id}`)}
+            onClick={() => router.push(`/dashboard/quizzes/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem> */}
