@@ -9,6 +9,8 @@ const Surveys = () => {
     (state: any) => state.analytics.changeDuration
   );
   const surveysChange = useSelector((state: any) => state.analytics.surveysChange);
+  console.log('totalSurveys', totalSurveys);
+  console.log('changeDuration', changeDuration);
   return (
     <div>
       <Card>
