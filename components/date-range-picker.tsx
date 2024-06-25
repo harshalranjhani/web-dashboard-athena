@@ -35,7 +35,6 @@ export const fetchAnalytics = async (
         }
       }
     );
-    console.log('response', response.data.data.currentPeriod.totalSurveys);
     dispatch(
       analyticsActions.setData({
         totalUsers: response.data.data.currentPeriod.totalUsers,
