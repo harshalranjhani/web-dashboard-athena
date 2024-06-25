@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "utils/store/analytics-slice.js", "utils/store/index.js", "app/Providers.js", "models/user.ts", "lib/mongodb.ts", "app/api/register/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "utils/store/analytics-slice.js", "utils/store/index.js", "app/Providers.js", "models/user.ts", "lib/mongodb.ts", "app/api/register/route.js", "components/custom/Chatbot.js"],
   "exclude": ["node_modules"]
 }
