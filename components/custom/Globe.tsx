@@ -57,10 +57,10 @@ export default function Globe({
   }));
 
   const { theme } = useTheme();
-  const [dark, setDark] = useState(theme === "dark" ? 1 : 0);
+  const [dark, setDark] = useState(theme !== "light" ? 1 : 0);
 
   useEffect(() => {
-    setDark(theme === "dark" ? 1 : 0);
+    setDark(theme !== "light" ? 1 : 0);
   }, []);
 
   const updatePointerInteraction = (value: any) => {

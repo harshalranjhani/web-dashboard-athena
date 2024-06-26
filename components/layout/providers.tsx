@@ -9,7 +9,7 @@ export default function Providers({
 }) {
   return (
     <>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <SessionProvider refetchOnWindowFocus refetchInterval={5 * 60}>{children}</SessionProvider>
       </ThemeProvider>
     </>
