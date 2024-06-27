@@ -21,6 +21,15 @@ export default function AuthenticationPage() {
       >
         Login
       </Link>
+      <Link
+        href="/"
+        className={cn(
+          buttonVariants({ variant: 'ghost' }),
+          'absolute left-4 top-4 md:left-4 md:top-8 z-40'
+        )}
+      >
+        Go Back
+      </Link>
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
         <div className="absolute inset-0 bg-zinc-900" />
         <div className="relative z-20 flex h-full items-center justify-center text-lg font-medium">
