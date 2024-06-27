@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { User } from '@/models/user';
 import { connectToDatabase } from '@/lib/mongodb';
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
@@ -88,6 +88,8 @@ const handler = NextAuth({
   pages: {
     signIn: '/signup'
   }
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

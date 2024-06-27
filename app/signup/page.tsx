@@ -3,13 +3,20 @@ import Link from 'next/link';
 import UserAuthForm from '@/components/forms/user-auth-form';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Sign Up | Athena',
   description: 'Create an account to get started with Athena Admin Dashboard.'
 };
 
-export default function AuthenticationPage() {
+export default async function AuthenticationPage() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+	redirect('/dashboard');
+  }
   return (
     <div className="relative flex h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <Link
@@ -25,7 +32,7 @@ export default function AuthenticationPage() {
         href="/"
         className={cn(
           buttonVariants({ variant: 'ghost' }),
-          'absolute left-4 top-4 md:left-4 md:top-8 z-40'
+          'absolute left-4 top-4 z-40 md:left-4 md:top-8'
         )}
       >
         Go Back
@@ -41,7 +48,7 @@ export default function AuthenticationPage() {
               y="0px"
               width="100%"
               viewBox="0 0 784 992"
-              enable-background="new 0 0 784 992"
+              enableBackground="new 0 0 784 992"
             >
               <path
                 fill="#eb781a"
