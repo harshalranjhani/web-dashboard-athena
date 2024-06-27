@@ -4,8 +4,9 @@ import UserAuthForm from '@/components/forms/user-auth-form';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+
 import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/authOptions';
 
 export const metadata: Metadata = {
   title: 'Sign Up | Athena',
