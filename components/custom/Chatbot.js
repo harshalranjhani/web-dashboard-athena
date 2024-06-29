@@ -23,7 +23,7 @@ const DialogflowChatbot = () => {
         language-code="en"
         max-query-length="-1"
       >
-        <df-messenger-chat-bubble chat-title=""></df-messenger-chat-bubble>
+        <df-messenger-chat-bubble chat-title="Say Hi to get started👋🏼"></df-messenger-chat-bubble>
       </df-messenger>
       <style jsx global>{`
         df-messenger {
