@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="relative z-10 w-full flex flex-col items-center">
           <div className="container py-10 lg:py-16">
             <div className="max-w-2xl text-center mx-auto">
-              <p className="">A project by Yug Foundation</p>
+              <p className="">A project for Yug Foundation</p>
               {/* Title */}
               <div className="mt-5 max-w-2xl mx-auto">
                 <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
@@ -30,7 +30,7 @@ export default function Hero() {
               </div>
               {/* End Title */}
               <div className="mt-5 max-w-3xl mx-auto">
-                <p className="text-xl text-muted-foreground">
+                <p className="text-xl text-muted-foreground text-orange-500">
                   We at YUG Foundation work towards bringing to life and meaning to our motto Sahyog, Seva, Samarpan.
                 </p>
               </div>

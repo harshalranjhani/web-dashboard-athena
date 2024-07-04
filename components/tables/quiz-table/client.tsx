@@ -1,19 +1,15 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
-import { User } from '@/constants/data';
-import { Plus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { columns } from './columns';
 import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 export const QuizClient: React.FC<any> = ({}) => {
-  const router = useRouter();
   const dispatch = useDispatch();
   const quizzes = useSelector((state: any) => state.analytics.quizzes);
 
@@ -27,7 +23,7 @@ export const QuizClient: React.FC<any> = ({}) => {
   }, []);
 
   return (
-    <>
+    <ScrollArea>
       <div className="flex items-start justify-between">
         <Heading
           title={`Quizzes (${quizzes?.length})`}
@@ -36,6 +32,6 @@ export const QuizClient: React.FC<any> = ({}) => {
       </div>
       <Separator />
       <DataTable tableType='quiz' searchKey="title" columns={columns} data={quizzes} />
-    </>
+    </ScrollArea>
   );
 };

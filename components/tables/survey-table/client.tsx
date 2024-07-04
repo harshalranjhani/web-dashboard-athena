@@ -11,6 +11,7 @@ import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 export const SurveyClient: React.FC<any> = ({ }) => {
   const router = useRouter();
@@ -28,7 +29,7 @@ export const SurveyClient: React.FC<any> = ({ }) => {
   // fetch users complete: fix table
 
   return (
-    <>
+    <ScrollArea>
       <div className="flex items-start justify-between">
         <Heading
           title={`Surveys (${surveys?.length})`}
@@ -37,6 +38,6 @@ export const SurveyClient: React.FC<any> = ({ }) => {
       </div>
       <Separator />
       <DataTable tableType="survey" searchKey="topic" columns={columns} data={surveys} />
-    </>
+    </ScrollArea>
   );
 };
