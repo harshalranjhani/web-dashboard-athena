@@ -8,7 +8,6 @@ import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 export const UserClient: React.FC<any> = ({}) => {
   const dispatch = useDispatch();
@@ -26,7 +25,7 @@ export const UserClient: React.FC<any> = ({}) => {
   // fetch users complete: fix table
 
   return (
-    <ScrollArea>
+    <>
       <div className="flex items-start justify-between">
         <Heading
           title={`Users (${users.length})`}
@@ -35,6 +34,6 @@ export const UserClient: React.FC<any> = ({}) => {
       </div>
       <Separator />
       <DataTable tableType="user" searchKey="name" columns={columns} data={users} />
-    </ScrollArea>
+    </>
   );
 };
