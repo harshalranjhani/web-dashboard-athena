@@ -9,9 +9,9 @@ import { useRouter, useParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { analyticsActions } from '@/utils/store/analytics-slice';
 
-export default function BlogUpdatePage({blog}: any) {
-  const { blogId } = useParams();
+export default function BlogUpdatePage({currentBlog, blogId}: any) {
   const blogs = useSelector((state: any) => state.analytics.blogs);
+  const blog = blogs.find((b: any) => b.id === parseInt(blogId as string));
   const [title, setTitle] = useState(blog?.title || '');
   const [region, setRegion] = useState(blog?.region || '');
   const [pic, setPic] = useState(blog?.picture || '');

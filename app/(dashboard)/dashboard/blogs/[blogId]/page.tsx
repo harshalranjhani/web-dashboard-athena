@@ -11,7 +11,7 @@ const EditBlog = async ({ params }: any) => {
   const blog = await fetchBlog(params.blogId);
   return (
     <div>
-      <BlogUpdatePage blog={blog} />
+      <BlogUpdatePage blog={blog} blogId={params.blogId} />
     </div>
   );
 };
