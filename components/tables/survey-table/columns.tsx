@@ -31,6 +31,30 @@ export const columns: ColumnDef<any>[] = [
     accessorKey: 'description',
     header: 'DESCRIPTION'
   },
+  {
+    accessorKey: 'questions',
+    header: 'QUESTIONS',
+    accessorFn: row => row.questions.length,
+    cell: ({ row }) => row.original.questions.length, 
+  },
+  {
+    accessorKey: 'open_ended',
+    header: 'OPEN-ENDED',
+    accessorFn: row => row.questions.filter((q: any) => q.type === 'OPEN_ENDED').length,
+    cell: ({ row }) => row.original.questions.filter((q: any) => q.type === 'OPEN_ENDED').length,
+  },
+  {
+    accessorKey: 'boolean',
+    header: 'BOOLEAN',
+    accessorFn: row => row.questions.filter((q: any) => q.type === 'BOOLEAN').length,
+    cell: ({ row }) => row.original.questions.filter((q: any) => q.type === 'BOOLEAN').length,
+  },
+  {
+    accessorKey: 'multiple_choice',
+    header: 'MULTIPLE CHOICE',
+    accessorFn: row => row.questions.filter((q: any) => q.type === 'MULTIPLE_CHOICE').length,
+    cell: ({ row }) => row.original.questions.filter((q: any) => q.type === 'MULTIPLE_CHOICE').length,
+  },
   // {
   //   accessorKey: 'email',
   //   header: 'EMAIL'

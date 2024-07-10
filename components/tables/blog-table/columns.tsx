@@ -2,6 +2,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
 import { Checkbox } from '@/components/ui/checkbox';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<any>[] = [
   // {
@@ -34,6 +35,16 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'region',
     header: 'REGION'
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'CREATED',
+    cell: ({ row }) => format(new Date(row.original.createdAt), 'dd/MM/yyyy'),
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: 'UPDATED',
+    cell: ({ row }) => format(new Date(row.original.updatedAt), 'dd/MM/yyyy'),
   },
   // {
   //   accessorKey: 'gender',

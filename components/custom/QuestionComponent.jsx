@@ -46,10 +46,9 @@ const QuestionComponent = ({ question }) => {
       },
     ],
   };
-
   return (
     <div className="p-4 my-4 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">{text}</h2>
+      <h2 className="text-xl font-semibold mb-4">Question: {text}</h2>
       <div className="flex justify-around mb-4">
         <div className="w-1/2">
           <Pie data={ageChartData} />
@@ -58,6 +57,7 @@ const QuestionComponent = ({ question }) => {
           <Pie data={genderChartData} />
         </div>
       </div>
+      <h1>Responses: </h1>
       <div className="h-[100px] overflow-y-auto border-t border-gray-200">
         {answers.map((answer, index) => (
           <div key={index} className="p-2 border-b">
