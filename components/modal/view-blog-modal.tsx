@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
-import ReactMarkdown from 'react-markdown';
 
 interface BlogModalProps {
   isOpen: boolean;
@@ -52,7 +51,7 @@ export const BlogViewModal: React.FC<BlogModalProps> = ({
           <p className="text-gray-500 text-sm">{new Date(data.createdAt).toLocaleDateString()}</p>
         </div>
         <div className="pt-4 px-4">
-          <ReactMarkdown>{data.content}</ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: data.content }} />
         </div>
       </div>
       <div className="flex w-full items-center justify-end space-x-2 pt-6">
