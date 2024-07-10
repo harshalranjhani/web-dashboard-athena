@@ -63,6 +63,7 @@
     "react-hook-form": "latest",
     "react-markdown": "latest",
     "react-redux": "latest",
+    "react-responsive": "^10.0.0",
     "recharts": "latest",
     "sharp": "latest",
     "tailwind-merge": "latest",
