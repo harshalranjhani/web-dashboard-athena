@@ -5,17 +5,17 @@ import { useMediaQuery } from 'react-responsive';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const QuestionComponent = ({ question }) => {
+const QuestionComponent = ({ question }: any) => {
   const { text, answers } = question;
 
   const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
 
-  const ageData = answers.reduce((acc, answer) => {
+  const ageData = answers.reduce((acc: any, answer: any) => {
     acc[answer.age] = (acc[answer.age] || 0) + 1;
     return acc;
   }, {});
 
-  const genderData = answers.reduce((acc, answer) => {
+  const genderData = answers.reduce((acc: any, answer: any) => {
     acc[answer.gender] = (acc[answer.gender] || 0) + 1;
     return acc;
   }, {});
@@ -62,7 +62,7 @@ const QuestionComponent = ({ question }) => {
       </div>
       <h1>Responses:</h1>
       <div className="h-[100px] overflow-y-auto border-t border-gray-200">
-        {answers.map((answer, index) => (
+        {answers.map((answer: any, index: number) => (
           <div key={index} className="p-2 border-b">
             <p><strong>Location:</strong> {answer.location}</p>
             <p><strong>Response:</strong> {answer.response}</p>

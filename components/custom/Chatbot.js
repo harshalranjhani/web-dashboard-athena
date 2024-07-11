@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
+import Logo from '../../public/logo.svg';
 
 const DialogflowChatbot = () => {
   return (
@@ -26,17 +27,22 @@ const DialogflowChatbot = () => {
         <df-messenger-chat-bubble chat-title="Say Hi to get started👋🏼"></df-messenger-chat-bubble>
       </df-messenger>
       <style jsx global>{`
-        df-messenger {
-          z-index: 999;
-          position: fixed;
-          --df-messenger-font-color: #000;
-          --df-messenger-font-family: Google Sans;
-          --df-messenger-chat-background: #f3f6fc;
-          --df-messenger-message-user-background: #d3e3fd;
-          --df-messenger-message-bot-background: #fff;
-          bottom: 16px;
-          right: 16px;
-        }
+      df-messenger {
+        z-index: 999;
+        position: fixed;
+        --df-messenger-font-color: #000;
+        --df-messenger-font-family: Google Sans;
+        --df-messenger-message-user-background: #fed8b1;
+        --df-messenger-message-bot-background: #F5c0c9;
+        --df-messenger-message-highlight-color: #f3be33;
+        --df-messenger-message-highlight-background: #f3be33;
+        --df-messenger-titlebar-background: #73504b;
+        --df-messenger-chat-background: #fdfdfd;
+        --df-messenger-chat-background: no-repeat url(./logo.svg) #fdfdfd center;
+        --df-messenger-chat-bubble-background	: #eb781a;
+        bottom: 16px;
+        right: 16px;
+      }
       `}</style>
     </>
   );
