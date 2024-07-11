@@ -16,11 +16,10 @@ export function RecentQuestions() {
               <AvatarImage src="/avatars/01.png" alt="Avatar" />
               <AvatarFallback>{question.query.slice(0, 1)}</AvatarFallback>
             </Avatar>
-            <div className="ml-4 space-y-1">
+            <div className="ml-4 flex items-center">
               <p className="text-sm font-medium leading-none">
                 {question.query}
               </p>
-              <p className="text-sm text-muted-foreground">{question.status}</p>
             </div>
           </div>
         );
