@@ -42,7 +42,8 @@ export const authOptions = {
             email: user?.email,
             image: user?.image
           };
-        }
+        },
+        checks: ['none'],
       }),
       CredentialsProvider({
         credentials: {

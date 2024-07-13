@@ -9,7 +9,9 @@ export default withAuth(
     callbacks: {
       // authorize if user is signed in
       authorized: async ({ token }) => {
+        console.log(token)
         if (token) {
+          console.log("User is signed in")
           return true
         }
         return false
