@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
-import Logo from '../../public/logo.svg';
 
 const DialogflowChatbot = () => {
   return (
