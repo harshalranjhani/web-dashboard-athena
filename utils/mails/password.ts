@@ -81,8 +81,8 @@ export const getPasswordHTML = (password: string) => {
             </table>
             <p>Your password is: <strong>${password}</strong></p>
             <p>Please note that this password cannot be changed. Keep it safe.</p>
-            <p>Continue to login at <a href="https://web-dashboard-athena-hr64.vercel.app/signin" target="_blank" style="color:#EB781A;text-decoration:underline;font-weight:500">this link</a>.</p>
-            <a href="https://web-dashboard-athena-hr64.vercel.app/signin" class="button" target="_blank">Login Now</a>
+            <p>Continue to login at <a href="https://athena.yugpune.org/signin" target="_blank" style="color:#EB781A;text-decoration:underline;font-weight:500">this link</a>.</p>
+            <a href="https://athena.yugpune.org/signin" class="button" target="_blank">Login Now</a>
           </div>
         </td>
       </tr>
