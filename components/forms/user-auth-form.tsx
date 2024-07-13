@@ -26,7 +26,7 @@ export default function UserAuthForm() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const defaultValues = {
-    email: 'name@domain.com'
+    email: ''
   };
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
