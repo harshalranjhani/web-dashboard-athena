@@ -30,8 +30,6 @@ export default function LoginForm() {
       password
     });
 
-    console.log(result);
-
     if (result?.error) {
       // Handle error
       toast({

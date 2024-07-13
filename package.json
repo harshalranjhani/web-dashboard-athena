@@ -51,7 +51,7 @@
     "lucide-react": "latest",
     "mongoose": "latest",
     "next": "latest",
-    "next-auth": "latest",
+    "next-auth": "^4.23.2",
     "next-themes": "latest",
     "nextjs-toploader": "latest",
     "nodemailer": "latest",

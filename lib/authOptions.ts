@@ -85,6 +85,11 @@ export const authOptions = {
         }
       })
     ],
+    callbacks: {
+      async redirect({ url, baseUrl }: any) {
+        return baseUrl 
+      }
+    },
     pages: {
       signIn: '/signup'
     }
