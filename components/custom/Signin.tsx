@@ -39,13 +39,14 @@ export default function LoginForm() {
         variant: 'destructive'
       });
     } else {
-      // Handle success (e.g., redirect to a different page)
+      // Handle success
+      console.log('Signed in successfully');
       toast({
         duration: 2000,
         title: 'Signed in',
         description: 'You have been signed in successfully'
       });
-      router.replace('/dashboard');
+      window.location.href = '/dashboard';
     }
   };
 
